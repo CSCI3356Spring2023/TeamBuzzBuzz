@@ -6,6 +6,6 @@ class LoginForm(forms.ModelForm):
 	class Meta:
 		model = Login
 		fields = {
-			'email',
+			'username',
 			'password'
 		}

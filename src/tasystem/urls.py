@@ -16,7 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from pages.views import login_view, signup_view
+from login.views import login_view
+from signup.views import signup_view
 
 urlpatterns = [
 	path('', login_view, name='login'),

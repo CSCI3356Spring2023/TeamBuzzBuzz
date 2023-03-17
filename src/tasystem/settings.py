@@ -40,7 +40,7 @@ INSTALLED_APPS = [
 
     # own apps
     'login',
-    'pages',
+    'signup',
 ]
 
 MIDDLEWARE = [
