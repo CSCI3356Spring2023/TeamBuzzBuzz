@@ -4,10 +4,9 @@ from django.contrib.auth.models import User
 
 # Create your views here.
 def login_view(request, *args, **kwargs):
-	user = User.objects.get(email='abc@gmail.com')
 	# return HttpResponse('<h1>Hello World</h1>')
 	context = {
-		'email': user.email,
+		'email': "exampleemail@gmail.com",
 	}
 	return render(request, 'login.html', context)
 
