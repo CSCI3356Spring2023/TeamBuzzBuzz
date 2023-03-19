@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     # own apps
     'login',
     'signup',
+    'add_course'
 ]
 
 MIDDLEWARE = [

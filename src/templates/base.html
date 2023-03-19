@@ -18,8 +18,8 @@
     />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
-
+    <link rel="stylesheet" type="text/css" href = "{% static "css/main.css" %}" />
+    
     {% if title %}
     <title>Ta System - {{ title }}</title>
     {% else %}
@@ -49,9 +49,6 @@
                 >Landing Page</a
               >
               <a class="nav-item nav-link" href="{% url 'signup' %}"
-                >Add Course</a
-              >
-              <a class="nav-item nav-link" href="{% url 'signup' %}"
                 >Course View</a
               >
               <a class="nav-item nav-link" href="{% url 'signup' %}">Apply</a>
@@ -66,7 +63,11 @@
       </nav>
     </header>
     <main role="main" class="container">
-      <div class="">{% block content %}{% endblock %}</div>
+      <div class="">
+        {% block content %}{% endblock %}
+        {%block addcourse%}{% endblock %}
+
+      </div>
     </main>
     <script
       src="https://code.jquery.com/jquery-3.2.1.slim.min.js"

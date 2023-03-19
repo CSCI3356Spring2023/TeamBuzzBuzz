@@ -2,12 +2,13 @@ from django.shortcuts import render
 from django.contrib.auth.models import User
 # from .forms import LoginForm
 from .models import Login
+from django.http import HttpResponse
 
 # Create your views here.
 def login_view(request, *args, **kwargs):
-	user = User.objects.get(email='abc@gmail.com')
+	# user = User.objects.get(email='abc@gmail.com')
 	context = {
-		'email': user.email,
+		'email': "example@gmail.com",
 	}
 	return render(request, 'login/login.html', context)
 
