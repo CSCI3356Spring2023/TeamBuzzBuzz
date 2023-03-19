@@ -20,10 +20,11 @@ from login.views import login_view
 from signup.views import signup_view
 from add_course.views import add_course_view
 
-#Can't render add_course if the view is from pages for some reason
+# Can't render add_course if the view is from pages for some reason
 urlpatterns = [
     path('', login_view, name='login'),
     path('signup/', signup_view, name='signup'),
     path('add_course/', add_course_view, name='add_course'),
+    path('login/', login_view, name='login'),
     # path('admin/', admin.site.urls),
 ]

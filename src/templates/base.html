@@ -18,8 +18,8 @@
     />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" type="text/css" href = "{% static 'css/main.css' %}" />
-    
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
+
     {% if title %}
     <title>Ta System - {{ title }}</title>
     {% else %}
@@ -48,14 +48,14 @@
               <a class="nav-item nav-link" href="{% url 'signup' %}"
                 >Landing Page</a
               >
-              <a class="nav-item nav-link" href="{% url 'signup' %}"
-                >Course View</a
+              <a class="nav-item nav-link" href="{% url 'add_course' %}"
+                >Add Course</a
               >
               <a class="nav-item nav-link" href="{% url 'signup' %}">Apply</a>
             </div>
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
-              <a class="nav-item nav-link" href="#">Login</a>
+              <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>
               <a class="nav-item nav-link" href="#">Register</a>
             </div>
           </div>
@@ -64,9 +64,7 @@
     </header>
     <main role="main" class="container">
       <div class="">
-        {% block content %}{% endblock %}
-        {%block addcourse%}{% endblock %}
-
+        {% block content %}{% endblock %} {% block addcourse %}{% endblock %}
       </div>
     </main>
     <script
