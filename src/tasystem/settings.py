@@ -20,6 +20,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
 
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
@@ -42,11 +44,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
 
     # own apps
     'login.apps.LoginConfig',
     'signup.apps.SignupConfig',
     'add_course.apps.AddCourseConfig',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
