@@ -1,16 +1,14 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
-# from .forms import LoginForm
-from .models import Login
-from django.http import HttpResponse
+from .forms import LoginForm
 
 # Create your views here.
 def login_view(request, *args, **kwargs):
-	# user = User.objects.get(email='abc@gmail.com')
+	my_form = LoginForm()
 	context = {
-		'email': "example@gmail.com",
+		'form': my_form
 	}
-	return render(request, 'login/login.html', context)
+	return render(request, 'login/login.html', context )
 
 # def login_form_view(request):
 # 	form = ProductForm(request.POST or None)
