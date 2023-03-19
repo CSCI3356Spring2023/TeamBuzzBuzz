@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     'login.apps.LoginConfig',
     'signup.apps.SignupConfig',
     'add_course.apps.AddCourseConfig',
-    'register.apps.RegisterConfig'
 ]
 
 MIDDLEWARE = [

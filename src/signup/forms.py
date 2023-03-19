@@ -1,9 +1,9 @@
 from django import forms
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 
-class SignUpForm(forms.Form):
-	name = forms.CharField(widget = forms.TextInput())
+class SignUpForm(UserCreationForm):
 	email = forms.EmailField()
-	password = forms.CharField(widget = forms.TextInput())
 
 	CLASSCHOICES = (
 		(1, '    '),
@@ -23,3 +23,8 @@ class SignUpForm(forms.Form):
 		(4, 'Admin')
 	)
 	position = forms.ChoiceField(choices = CHOICES, widget = forms.Select)
+
+	class Meta:
+		model = User
+		fields = ('username', 'email', 'password1', 'password2', 'year', 'gpa')
+
