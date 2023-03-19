@@ -44,9 +44,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # own apps
-    'login',
-    'signup',
-    'add_course'
+    'login.apps.LoginConfig',
+    'signup.apps.SignupConfig',
+    'add_course.apps.AddCourseConfig',
+    'register.apps.RegisterConfig'
 ]
 
 MIDDLEWARE = [
