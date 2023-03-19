@@ -8,7 +8,7 @@ def signup_view(request, *args, **kwargs):
 	if request.method == 'POST':
 		form = SignUpForm(request.POST)
 		if form.is_valid():
-			# form.save() # This saves the user to the database
+			form.save() # This saves the user to the database
 			username = form.cleaned_data.get('username')
 			messages.success(request, f'Account created for {username}!')
 			return redirect('home')
