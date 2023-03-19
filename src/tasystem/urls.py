@@ -23,7 +23,7 @@ from register.views import register_view
 
 # Can't render add_course if the view is from pages for some reason
 urlpatterns = [
-    path('', login_view, name='login'),
+    path('', login_view, name='home'),
     path('signup/', signup_view, name='signup'),
     path('add_course/', add_course_view, name='add_course'),
     path('login/', login_view, name='login'),
