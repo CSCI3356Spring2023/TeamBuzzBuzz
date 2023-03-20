@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from .forms import LoginForm
 from signup.models import SignUp
@@ -14,9 +14,11 @@ def login_view(request, *args, **kwargs):
 			try:
 				correctInfo = SignUp.objects.get(email = emailinput)
 				if emailinput == correctInfo.email and passwordinput == correctInfo.password:
-					print('good')
+					messages.success(request, f'Login success for {emailinput}!')
+					return redirect('home')
 				else:
 					form = LoginForm()
+					messages.warning(request, f'Login failed for {emailinput}!')
 			except:
 				form = LoginForm()
 				messages.warning(request, f'Login failed for {emailinput}!')
