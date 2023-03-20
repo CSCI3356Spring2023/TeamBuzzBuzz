@@ -3,7 +3,8 @@ from .forms import ApplicationForm
 from add_course.models import Course
 # Create your views here.
 def apply_view(request, *args, **kwargs):
-    course_data = Course.objects.all()
+    course_data = Course.objects.get(id=3)
+    print(course_data)
     form = ApplicationForm()
     if request.method == "POST":
         form = ApplicationForm(request.POST or None)
@@ -16,7 +17,7 @@ def apply_view(request, *args, **kwargs):
         
         form = ApplicationForm()
     context = {
-        'course_data' : course_data,
+        'course' : course_data,
         'form' : form
     }
         
