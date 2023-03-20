@@ -1,9 +1,9 @@
 from django.shortcuts import render
-from add_course.models import CourseModel
+from add_course.models import Course
 # Create your views here.
 
 def course_list_view(request):
-    course_data = CourseModel.objects.all()
+    course_data = Course.objects.all()
 
     context = {
         'course_data' : course_data
