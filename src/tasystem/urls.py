@@ -19,6 +19,7 @@ from django.urls import path
 from login.views import login_view
 from signup.views import signup_view
 from add_course.views import add_course_view
+from course_list.views import course_list_view
 
 # Can't render add_course if the view is from pages for some reason
 urlpatterns = [
@@ -26,5 +27,6 @@ urlpatterns = [
     path('signup/', signup_view, name='signup'),
     path('add_course/', add_course_view, name='add_course'),
     path('login/', login_view, name='login'),
+    path('course_list/', course_list_view, name='course_list'),
     path('admin/', admin.site.urls),
 ]

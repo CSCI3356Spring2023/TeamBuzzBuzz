@@ -3,7 +3,7 @@
 {%block addcourse%}
 <div>
     <h1>Course Creation</h1>
-    <form action="">
+    <form action="" method='POST'> {% csrf_token %}
         {{form.as_p}}
         <input type ='submit' value='back'>
         <input type ='submit' value='next'>

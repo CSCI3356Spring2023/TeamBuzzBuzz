@@ -49,7 +49,7 @@ INSTALLED_APPS = [
     # own apps
     'login.apps.LoginConfig',
     'signup.apps.SignupConfig',
-    'add_course.apps.AddCourseConfig',
+    'add_course',
     'crispy_forms',
     'crispy_bootstrap4',
 ]
@@ -133,3 +133,5 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+SITE_ID = 1
