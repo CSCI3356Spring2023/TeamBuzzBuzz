@@ -53,9 +53,10 @@ INSTALLED_APPS = [
     # own apps
     'login.apps.LoginConfig',
     'signup.apps.SignupConfig',
-    'add_course.apps.AddCourseConfig',
+    'add_course',
     'crispy_forms',
     'crispy_bootstrap4',
+    'course_list',
 ]
 
 MIDDLEWARE = [

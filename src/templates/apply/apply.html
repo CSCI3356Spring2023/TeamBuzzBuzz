@@ -1,0 +1,43 @@
+<!-- {% extends 'base.html' %} {% block content %}
+<h1> Apply</h1>
+{% for course in course_list %}
+<p1>{{course.title}}</p1>>
+<p2>{{course.description}}</p2>>
+<form method='POST'> {% csrf_token %}
+    {{form.as_p}}
+    <input type='submit' value= 'Submit Application' />
+</form>
+
+{% endblock content %} -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Course List</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Course Title</th>
+                <th>Email</th>
+                <th>Discussion</th>
+                <th>TA Required</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for course in course_data %}
+                <tr>
+                    <td>{{ course.course_title }}</td>
+                    <td>{{ course.email }}</td>
+                    <td>{{ course.discussion}}</td>
+                    <td>{{ course.ta_required }}</td>
+                    <td>{{ course.description }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <form method='POST'> {% csrf_token %}
+        {{form.as_p}}
+        <input type='submit' value= 'Submit Application' />
+    </form>
+{% endblock %}
