@@ -1,21 +1,19 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from .forms import LoginForm
+from signup.models import SignUp
 
 # Create your views here.
 def login_view(request, *args, **kwargs):
-	my_form = LoginForm()
+	if request.method == 'GET':
+		form = LoginForm(request.GET or None)
+		if form.is_valid():
+			emailinput = form.cleaned_data.get('email')
+			correctInfo = SignUp.objects.get(email = emailinput)
+			print(correctInfo)
+	else:
+		form = LoginForm()
 	context = {
-		'form': my_form
+		'form': form
 	}
 	return render(request, 'login/login.html', context )
-
-# def login_form_view(request):
-# 	form = ProductForm(request.POST or None)
-# 	if form.is_valid():
-# 		form.save()
-
-# 	context = {
-# 			'form': form
-# 	}
-# 	return render(request, '')
