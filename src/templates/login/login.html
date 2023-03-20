@@ -6,8 +6,8 @@
     <form method = 'GET'>
         {{form|crispy}}
         <button class="btn btn-outline-info" type="submit">Login</button>
-        <button class="btn btn-outline-info" type="submit">Sign Up</button>
+        <a class="btn btn-outline-info" href="{% url 'signup' %}"> Sign Up </a>
     </form>
-
 </div>
 {% endblock %}
+

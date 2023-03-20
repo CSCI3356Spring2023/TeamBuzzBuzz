@@ -1,9 +1,8 @@
 from django.shortcuts import render
-from login.models import Login
+from login.forms import LoginForm
 # Create your views here.
 
 def student_view(request, *args, **kwargs):
-	# print(request)
 	context = {}
 	return render(request, 'landing/student.html', context)
 
