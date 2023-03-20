@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Course
+from .models import CourseModel
 
 # class AddCourseForm(forms.Form):
 #     # title, email, ta number, discussion
@@ -26,7 +26,7 @@ from .models import Course
 
 class AddCourseForm(forms.ModelForm):
     class Meta:
-        model = Course
+        model = CourseModel
         fields = [
             'course_title',
             'email',

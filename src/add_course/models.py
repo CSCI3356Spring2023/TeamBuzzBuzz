@@ -1,6 +1,6 @@
 from django.db import models
 
-class Course(models.Model):
+class CourseModel(models.Model):
     OPTIONS = (
         ('1', '1'),
         ('2', '2'),
