@@ -1,13 +1,10 @@
-{% extends 'base.html' %}
-
-{% block content %}
+{% extends 'base.html' %} {% load crispy_forms_tags %} {% block content %}
 <div>
-    <h1>Login</h1>
-    <form action="">
-        {{form.as_p}}
-        <input type ='submit' value='Login'>
-        <input type ='submit' value='Sign-Up'>
-    </form>
-
+  <h1>Login</h1>
+  <form action="">
+    {{form|crispy}}
+    <input type="submit" value="Login" />
+    <input type="submit" value="Sign-Up" />
+  </form>
 </div>
 {% endblock %}

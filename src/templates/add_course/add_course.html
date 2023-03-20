@@ -1,13 +1,10 @@
-{% extends 'base.html' %}
-
-{%block addcourse%}
+{% extends 'base.html' %} {% load crispy_forms_tags %} {%block addcourse%}
 <div>
-    <h1>Course Creation</h1>
-    <form action="">
-        {{form.as_p}}
-        <input type ='submit' value='back'>
-        <input type ='submit' value='next'>
-    </form>
-
+  <h1>Course Creation</h1>
+  <form action="">
+    {{ form|crispy }}
+    <input type="submit" value="back" />
+    <input type="submit" value="next" />
+  </form>
 </div>
 {%endblock%}
