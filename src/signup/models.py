@@ -9,17 +9,17 @@ class SignUp(models.Model):
 	password = models.CharField(max_length=60)
 
 	CHOICES = (
-		(1, 'Student'),
-		(2, 'Professor'),
-		(3, 'Admin')
+		('1', 'Student'),
+		('2', 'Professor'),
+		('3', 'Admin')
 	)
 	position = models.CharField(choices = CHOICES, max_length = 1)
 
 	CLASSCHOICES = (
-		(1, '2023'),
-		(2, '2024'),
-		(3, '2025'),
-		(4, '2026')
+		('1', '2023'),
+		('2', '2024'),
+		('3', '2025'),
+		('4', '2026')
 	)
 	year = models.CharField(choices = CLASSCHOICES, max_length = 1)
 
