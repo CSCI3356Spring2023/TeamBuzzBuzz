@@ -15,9 +15,9 @@ def apply_view(request, *args, **kwargs):
             print(form.errors)
         
         form = ApplicationForm()
-        context = {
-            'course_data' : course_data,
-            'form' : form
-        }
+    context = {
+        'course_data' : course_data,
+        'form' : form
+    }
         
-        return render(request, 'apply/apply.html', context)
+    return render(request, 'apply/apply.html', context)

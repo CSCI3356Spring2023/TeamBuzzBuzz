@@ -18,6 +18,7 @@ def login_view(request, *args, **kwargs):
 					return redirect('home')
 				else:
 					form = LoginForm()
+					messages.warning(request, f'Login failed for {emailinput}!')
 			except:
 				form = LoginForm()
 				messages.warning(request, f'Login failed for {emailinput}!')

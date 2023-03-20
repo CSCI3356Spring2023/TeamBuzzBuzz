@@ -6,5 +6,5 @@ class ApplicationForm(forms.ModelForm):
     class Meta:
         model = ApplyModel
         fields = [
-            'additional_information'
+            'additional_information',
         ]
