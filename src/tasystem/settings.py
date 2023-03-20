@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'crispy_bootstrap4',
     'course_list',
     'apply',
+    'landing_page'
 ]
 
 MIDDLEWARE = [

@@ -21,6 +21,7 @@ from signup.views import signup_view
 from add_course.views import add_course_view
 from course_list.views import course_list_view
 from apply.views import apply_view
+from landing_page.views import student_view, professor_view, admin_view
 
 # Can't render add_course if the view is from pages for some reason
 urlpatterns = [
@@ -30,5 +31,8 @@ urlpatterns = [
     path('login/', login_view, name='login'),
     path('course_list/', course_list_view, name='course_list'),
     path('apply/', apply_view, name='apply'),
+    path('student', student_view, name = 'student'),
+    path('professor', professor_view, name = 'professor'),
+    path('bcadmin', admin_view, name = 'admin'),
     path('admin/', admin.site.urls),
 ]

@@ -13,9 +13,15 @@ def login_view(request, *args, **kwargs):
 			passwordinput = form.cleaned_data.get('password')
 			try:
 				correctInfo = SignUp.objects.get(email = emailinput)
+				userType = correctInfo.position
 				if emailinput == correctInfo.email and passwordinput == correctInfo.password:
 					messages.success(request, f'Login success for {emailinput}!')
-					return redirect('home')
+					if userType == '1':
+						return redirect('student')
+					elif userType == '2':
+						return redirect('professor')
+					else:
+						return redirect('bcadmin')
 				else:
 					form = LoginForm()
 					messages.warning(request, f'Login failed for {emailinput}!')
