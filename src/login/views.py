@@ -16,12 +16,16 @@ def login_view(request, *args, **kwargs):
 				userType = correctInfo.position
 				if emailinput == correctInfo.email and passwordinput == correctInfo.password:
 					messages.success(request, f'Login success for {emailinput}!')
-					if userType == '1':
-						return redirect('student')
-					elif userType == '2':
-						return redirect('professor')
-					else:
-						return redirect('bcadmin')
+					return redirect('landing', correctInfo.email, userType)
+						
+					# use this code if we want 3 seperate landing pages
+					# if userType == '1':
+					# 	return redirect('student', data = data)
+					# elif userType == '2':
+					# 	return redirect('professor', data = data)
+					# else:
+					# 	return redirect('bcadmin', data = data)
+
 				else:
 					form = LoginForm()
 					messages.warning(request, f'Login failed for {emailinput}!')
