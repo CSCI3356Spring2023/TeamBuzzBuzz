@@ -13,8 +13,9 @@ def login_view(request, *args, **kwargs):
 			passwordinput = form.cleaned_data.get('password')
 			try:
 				correctInfo = SignUp.objects.get(email = emailinput)
+				userType = correctInfo.position
 				if emailinput == correctInfo.email and passwordinput == correctInfo.password:
-					messages.success(request, f'Login successful for {emailinput}!')
+					messages.success(request, f'Login success for {emailinput}!')
 					return redirect('home')
 				else:
 					form = LoginForm()

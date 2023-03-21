@@ -1,5 +1,6 @@
 {% extends 'base.html' %} {% load crispy_forms_tags %} {% block content %}
 <div>
+<<<<<<< HEAD
   <h1>Login</h1>
   <form method="GET">
     {{form|crispy}}
@@ -8,3 +9,14 @@
   </form>
 </div>
 {% endblock %}
+=======
+    <h1>Login</h1>
+    <form method = 'GET'>
+        {{form|crispy}}
+        <button class="btn btn-outline-info" type="submit">Login</button>
+        <a class="btn btn-outline-info" href="{% url 'signup' %}"> Sign Up </a>
+    </form>
+</div>
+{% endblock %}
+
+>>>>>>> 38a1e715072582dc2a5936d16957416fb10fc0fe
