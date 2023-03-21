@@ -1,0 +1,22 @@
+{% extends "base.html" %} {% load crispy_forms_tags %} {% crispy form
+form.helper template_pack='bootstrap4' %} {% block content %}
+<div class="content-section">
+  <h1>Log In</h1>
+  <form method="POST">
+    {% csrf_token %}
+    <fieldset class="form-group">
+      <legend class="border-bottom mb-4">Login to your account</legend>
+      {{ form|crispy }}
+    </fieldset>
+    <div class="form-group">
+      <button class="btn btn-outline-info" type="submit">Log In</button>
+    </div>
+  </form>
+  <div class="border-top pt-3">
+    <small class="text-muted">
+      Don't have an account?
+      <a class="ml-1" href="{% url 'signup' %}"> Register </a>
+    </small>
+  </div>
+</div>
+{% endblock content %}

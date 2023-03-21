@@ -1,18 +1,12 @@
-{% extends 'base.html' %}
-
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 <h1>Landing Page</h1>
-<p>
-	User Email: {{email}} 
-</p>
-<p>
-	Position: 
-	{% if usertype == '1'%}
-		Student
-	{% elif usertype == '2'%}
-		Professor
-	{% elif usertype == '3'%}
-		Admin
-	{% endif %}
-</p>
-{% endblock %}
+{% if user.is_authenticated %}
+<h2>Welcome {{ user.first_name }} {{ user.last_name }}</h2>
+<p>Email: {{ user.email }}</p>
+<p>GPA: {{ user.gpa }}</p>
+<p>Is Staff: {{ user.is_staff }}</p>
+<p>Is Active: {{ user.is_active }}</p>
+<p>Is Superuser: {{ user.is_superuser }}</p>
+{% else %}
+<h2>Please Log In</h2>
+{% endif %} {% endblock %}

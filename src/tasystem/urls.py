@@ -14,12 +14,14 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.contrib.auth import views as auth_views
 from django.urls import path
 
-from login.views import login_view
-from signup.views import signup_view
+# from signup.views import signup_view
 from add_course.views import add_course_view
 from course_list.views import course_list_view
+from users.views import register as register_view
+from users.views import profile as profile_view
 from apply.views import apply_view
 # use this if you want different landing pages per user type
 # from landing_page.views import student_view, professor_view, admin_view
@@ -27,10 +29,15 @@ from landing_page.views import landing_view
 
 # Can't render add_course if the view is from pages for some reason
 urlpatterns = [
-    path('', login_view, name='home'),
-    path('signup/', signup_view, name='signup'),
+    path('', landing_view, name='home'),
+    path('signup/', register_view, name='signup'),
+    path('login/', auth_views.LoginView.as_view(template_name="users/login.html"), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(template_name="users/logout.html"), name='logout'),
+    path('profile/', profile_view, name='profile'),
+    
+    
+    
     path('add_course/', add_course_view, name='add_course'),
-    path('login/', login_view, name='login'),
     path('course_list/', course_list_view, name='course_list'),
     path('apply/', apply_view, name='apply'),
     path('landing/<str:email>/<str:usertype>/', landing_view, name = 'landing'),

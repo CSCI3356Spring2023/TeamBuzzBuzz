@@ -1,15 +1,17 @@
-from django.shortcuts import render
-from login.forms import LoginForm
-# Create your views here.
+from django.shortcuts import render, HttpResponse
+# from login.forms import LoginForm
+# # Create your views here.
 
-def landing_view(request, email, usertype):
-	# data = request.GET.get('data',1)
-	context = {
-		'email': email,
-		'usertype': usertype
-	}
-	return render(request, 'landing/landing.html', context)
+# def landing_view(request, email, usertype):
+# 	# data = request.GET.get('data',1)
+# 	context = {
+# 		'email': email,
+# 		'usertype': usertype
+# 	}
+# 	return render(request, 'landing/landing.html', context)
 
+def landing_view(request):
+	return render(request, 'landing/landing.html', {})
 
 # use if you want different landing pages for each type of user
 # def student_view(request, *args, **kwargs):

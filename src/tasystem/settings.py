@@ -42,6 +42,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # django apps
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -51,14 +52,15 @@ INSTALLED_APPS = [
     'django.contrib.sites',
 
     # own apps
-    'login.apps.LoginConfig',
-    'signup.apps.SignupConfig',
-    'add_course',
+    'users.apps.UsersConfig',
+    'add_course.apps.AddCourseConfig',
+    'course_list.apps.CourseListConfig',
+    'apply.apps.ApplyConfig',
+    'landing_page.apps.LandingPageConfig',
+
+    # third party apps
     'crispy_forms',
     'crispy_bootstrap4',
-    'course_list',
-    'apply',
-    'landing_page'
 ]
 
 MIDDLEWARE = [
@@ -107,18 +109,18 @@ DATABASES = {
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    # },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    # },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    # },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    # },
 ]
 
 
@@ -141,4 +143,15 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+LOGIN_REDIRECT_URL = 'home'
+
 SITE_ID = 1
+
+AUTH_USER_MODEL = 'users.CustomUser'
+
+LOGIN_URL = 'login'
+
+
+
+
+
