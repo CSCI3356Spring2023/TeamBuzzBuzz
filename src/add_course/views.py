@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from .forms import AddCourseForm
 # Create your views here.
+
+# add decorator for authenticating users is either professor or admin
 def add_course_view(request, *args, **kwargs):
     my_form = AddCourseForm()
     if request.method == "POST":

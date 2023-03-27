@@ -29,7 +29,6 @@ class AddCourseForm(forms.ModelForm):
         model = Course
         fields = [
             'course_title',
-            'email',
             'discussion',
             'ta_required',
             'description'

@@ -30,7 +30,7 @@
     <header class="site-header">
       <nav class="navbar navbar-expand-md navbar-dark bg-blue fixed-top">
         <div class="container">
-          <a class="navbar-brand mr-4" href="{% url 'home' %}">NAVBAR</a>
+          <a class="navbar-brand mr-4" href="{% url 'home' %}">TA Buzz</a>
           <button
             class="navbar-toggler"
             type="button"
@@ -52,9 +52,9 @@
               <a class="nav-item nav-link" href="{% url 'profile' %}"
                 >Profile</a
               >
-              <a class="nav-item nav-link" href="#">Courses</a>
+              <a class="nav-item nav-link" href="{% url 'course_list' %}">Courses</a>
               <a class="nav-item nav-link" href="#">Applications</a>
-              <a class="nav-item nav-link" href="#">Offer</a>
+              <a class="nav-item nav-link" href="#">Offers</a>
             </div>
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
