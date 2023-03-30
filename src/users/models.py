@@ -28,10 +28,10 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
-    gpa = models.DecimalField(max_digits=3, decimal_places=2)  # Add the GPA field
+    gpa = models.DecimalField(max_digits=3, decimal_places=2)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
-    year = models.PositiveIntegerField(default=2023)  # Add the year field
+    year = models.PositiveIntegerField(default=2023)
 
     objects = CustomUserManager()
 
@@ -55,4 +55,3 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name', 'gpa', 'year', 'is_staff']
-

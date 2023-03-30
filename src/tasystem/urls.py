@@ -47,3 +47,4 @@ urlpatterns = [
     # path('bcadmin/', admin_view, name = 'admin'),
     path('admin/', admin.site.urls),
 ]
+
