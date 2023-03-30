@@ -12,6 +12,12 @@ def apply_view(request, app_id):
         print("Posting Data")
         if form.is_valid():
             print("cleaned data: ", form.cleaned_data)
+            application = form.save()
+            application.course_title = course_data.course_title
+            application.discussion = course_data.discussion
+            application.description = course_data.description
+            application.email = course_data.email
+            application.ta_required = course_data.ta_required
             form.save()
         else:
             print(form.errors)
