@@ -2,6 +2,7 @@
 
 {% block content %}
     <h1>Courses</h1>
+    <h4><a href = "{% url 'add_course' %}"> Add Course </a></h4>
     <table>
         <thead>
             <tr>
@@ -10,6 +11,7 @@
                 <th>Discussion</th>
                 <th>TA Required</th>
                 <th>Description</th>
+                <!-- <th>Apply</th>  -->
             </tr>
         </thead>
         <tbody>
@@ -20,6 +22,7 @@
                     <td>{{ course.discussion}}</td>
                     <td>{{ course.ta_required }}</td>
                     <td>{{ course.description }}</td>
+                    <th><a href = "{% url 'apply' course.id %}"> Apply </a> </th> 
                 </tr>
             {% endfor %}
         </tbody>

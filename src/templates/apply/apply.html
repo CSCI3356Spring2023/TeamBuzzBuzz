@@ -2,10 +2,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h1>Apply</h1>
+    <h1>Apply to {{ course.course_title }} </h1>
     <table>
         <thead>
             <p>Title: {{ course.course_title }}</p>
+            <p>Email: {{ course.email }}</p>
             <p>Discussion: {{ course.discussion}}</p>
             <p>Number of TAs: {{ course.ta_required }}</p>
             <p>Description: {{ course.description }}</p>

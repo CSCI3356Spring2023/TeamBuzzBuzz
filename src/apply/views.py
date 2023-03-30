@@ -5,6 +5,7 @@ from add_course.models import Course
 # add decorator to make this only accessible to students and admin
 def apply_view(request, app_id):
     course_data = Course.objects.get(id=app_id)
+    
     print(course_data)
     form = ApplicationForm()
     if request.method == "POST":
@@ -29,3 +30,4 @@ def apply_view(request, app_id):
     }
         
     return render(request, 'apply/apply.html', context)
+
