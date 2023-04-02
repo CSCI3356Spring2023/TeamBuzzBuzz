@@ -10,7 +10,7 @@ from django.views.generic import (
     )
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
-class CourseCreateView(LoginRequiredMixin, CreateView):
+class CourseCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Course
     template_name = 'add_course/add_course.html'
     fields = ['course_title', 'discussion', 'ta_required', 'description']
@@ -18,6 +18,9 @@ class CourseCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
+    
+    def test_func(self):
+        return self.request.user.is_staff
 
 
 # def add_course_view(request, *args, **kwargs):

@@ -7,11 +7,12 @@ from django.urls import path
 from course_list.views import course_list_view
 from users.views import register as register_view
 from users.views import profile as profile_view
-from apply.views import apply_view
+# from apply.views import apply_view
 # use this if you want different landing pages per user type
 # from landing_page.views import student_view, professor_view, admin_view
 from landing_page.views import landing_view
 from add_course.views import CourseCreateView
+from apply.views import ApplyView
 # Can't render add_course if the view is from pages for some reason
 urlpatterns = [
     path('', landing_view, name='home'),
@@ -22,10 +23,11 @@ urlpatterns = [
     
     
     path('add_course/', CourseCreateView.as_view(), name='add_course'),
+    path('apply/<int:app_id>/', ApplyView.as_view(), name='apply'),
     
     # path('add_course/', add_course_view, name='add_course'),
     path('course_list/', course_list_view, name='course_list'),
-    path('course_list/apply/<int:app_id>/', apply_view, name='apply'),
+    # path('course_list/apply/<int:app_id>/', apply_view, name='apply'),
     path('landing/<str:email>/<str:usertype>/', landing_view, name = 'landing'),
     # use this if you want different landing pages per user type
     # path('student/', student_view, name = 'student'),
