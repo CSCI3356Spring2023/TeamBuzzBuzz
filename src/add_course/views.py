@@ -1,8 +1,25 @@
 from django.shortcuts import render
 from .forms import AddCourseForm
-# Create your views here.
+from .models import Course
+from django.views.generic import (
+    ListView, 
+    DetailView, 
+    CreateView, 
+    UpdateView, 
+    DeleteView
+    )
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
-# add decorator for authenticating users is either professor or admin
+class CourseCreateView(LoginRequiredMixin, CreateView):
+    model = Course
+    template_name = 'add_course/add_course.html'
+    fields = ['course_title', 'discussion', 'ta_required', 'description']
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+
 def add_course_view(request, *args, **kwargs):
     my_form = AddCourseForm()
     if request.method == "POST":
