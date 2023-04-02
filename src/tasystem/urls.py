@@ -39,7 +39,7 @@ urlpatterns = [
     
     path('add_course/', add_course_view, name='add_course'),
     path('course_list/', course_list_view, name='course_list'),
-    path('apply/<int:app_id>/', apply_view, name='apply'),
+    path('course_list/apply/<int:app_id>/', apply_view, name='apply'),
     path('landing/<str:email>/<str:usertype>/', landing_view, name = 'landing'),
     # use this if you want different landing pages per user type
     # path('student/', student_view, name = 'student'),
