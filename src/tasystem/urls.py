@@ -3,7 +3,7 @@ from django.contrib.auth import views as auth_views
 from django.urls import path
 
 # from signup.views import signup_view
-from add_course.views import add_course_view
+# from add_course.views import add_course_view
 from course_list.views import course_list_view
 from users.views import register as register_view
 from users.views import profile as profile_view

@@ -24,12 +24,12 @@ from .models import Course
 #     description = forms.CharField(widget=forms.TextInput(
 #         attrs={'placeholder': 'Description for course'}))
 
-class AddCourseForm(forms.ModelForm):
-    class Meta:
-        model = Course
-        fields = [
-            'course_title',
-            'discussion',
-            'ta_required',
-            'description'
-        ]
+# class AddCourseForm(forms.ModelForm):
+#     class Meta:
+#         model = Course
+#         fields = [
+#             'course_title',
+#             'discussion',
+#             'ta_required',
+#             'description'
+#         ]
