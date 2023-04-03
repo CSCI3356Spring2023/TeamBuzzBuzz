@@ -21,10 +21,10 @@ class ProfessorCoursesView(LoginRequiredMixin, ListView):
     context_object_name = 'course_data'
 
     def get_queryset(self, *args, **kwargs):
-        first, last = self.kwargs['name'].split("_")
-        print("Name:", self.kwargs['name'], "First:", first, "Last:", last)
+        key = self.kwargs['pk']
+        print("Key:", key)
         try:
-            user = CustomUser.objects.get(first_name__iexact=first, last_name__iexact=last)
+            user = CustomUser.objects.get(pk=key)
             print("User:", user)
             courses = Course.objects.filter(author=user)
             print("Courses:", courses)
@@ -32,6 +32,20 @@ class ProfessorCoursesView(LoginRequiredMixin, ListView):
         except ObjectDoesNotExist as e:
             print("Exception:", e)
             return Course.objects.none()
+
+
+    # def get_queryset(self, *args, **kwargs):
+    #     first, last = self.kwargs['name'].split("_")
+    #     print("Name:", self.kwargs['name'], "First:", first, "Last:", last)
+    #     try:
+    #         user = CustomUser.objects.get(first_name__iexact=first, last_name__iexact=last)
+    #         print("User:", user)
+    #         courses = Course.objects.filter(author=user)
+    #         print("Courses:", courses)
+    #         return courses
+    #     except ObjectDoesNotExist as e:
+    #         print("Exception:", e)
+    #         return Course.objects.none()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

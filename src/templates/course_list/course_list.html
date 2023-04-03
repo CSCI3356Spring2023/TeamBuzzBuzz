@@ -31,9 +31,7 @@
       <td>{{ course.ta_required }}</td>
       <td>{{ course.description }}</td>
       <td>
-        <a
-          href="{% url 'professor_courses' name=course.author.first_name|lower|add:'_'|add:course.author.last_name|lower %}"
-        >
+        <a href="{% url 'professor_courses' course.author.id %}">
           {{ course.author.first_name }} {{ course.author.last_name }}
         </a>
       </td>
