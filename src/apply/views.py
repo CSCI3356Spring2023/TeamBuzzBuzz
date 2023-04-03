@@ -5,6 +5,9 @@ from add_course.models import Course
 from django.views.generic import CreateView, ListView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
+from django.core.mail import send_mail 
+from django.urls import reverse
+
 class ApplyView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Apply
     template_name = 'apply/apply.html'
@@ -42,6 +45,26 @@ class ApplicationsListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
             applications = Apply.objects.filter(course__author=self.request.user)
             print(applications)
             return applications
+
+    def send_offer_email(request):
+    # form.instance.author = self.request.user
+    # form.instance.course = get_object_or_404(Course, id=self.kwargs['app_id'])
+    # send_mail(
+    #     'TA Offer for {}'.format(form.instance.course.course_title),
+    #     'Here is the message.',
+    #     'kykoh906@gmail.com',
+    #     ['kohke@bc.edu'],
+    #     fail_silently=False,
+    # )
+
+        send_mail(
+            'TA Offer Notice',
+            'Here is the message.',
+            'kohke@bc.edu',
+            ['kohke@bc.edu'],
+            fail_silently=False,
+        )
+        return redirect('professor_applications')
         
 
 class StudentApplicationsListView(LoginRequiredMixin, UserPassesTestMixin, ListView):

@@ -6,6 +6,7 @@
       <th>Applicant</th>
       <th>Course</th>
       <th>Review</th>
+      <th>Offers</th>
     </tr>
   </thead>
   <tbody class="table-hover">
@@ -14,6 +15,7 @@
       <td>{{ app.author.first_name }} {{ app.author.last_name }}</td>
       <td>{{ app.course.course_title }}</td>
       <td><a href="#"> Review </a></td>
+      <td><a href="{% url 'send_offer_email' %}">Send Offer</a><td>
     </tr>
     {% endfor %}
     </tr>

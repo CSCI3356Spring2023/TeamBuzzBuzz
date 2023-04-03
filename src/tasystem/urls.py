@@ -32,6 +32,7 @@ urlpatterns = [
     path('application_confirm_delete/<int:pk>/', ApplicationDeleteView.as_view(), name='application_confirm_delete'),
 
 
+    path('send_offer_email/', ApplicationsListView.send_offer_email, name = 'send_offer_email'),
 
 
     # path('course_list/', course_list_view, name='course_list'),
