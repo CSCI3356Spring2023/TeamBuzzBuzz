@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 # from .forms import ApplicationForm
 from .models import Apply
+from add_course.models import Course
 from django.views.generic import CreateView, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
@@ -12,6 +13,7 @@ class ApplyView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 
     def form_valid(self, form):
         form.instance.author = self.request.user
+        form.instance.course = get_object_or_404(Course, id=self.kwargs['app_id'])
         return super().form_valid(form)
     
     def test_func(self):
@@ -25,6 +27,16 @@ class ApplicationsListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     def test_func(self):
         return self.request.user.is_staff
     
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            applications = Apply.objects.all()
+            print(applications)
+            return applications
+        else:
+            applications = Apply.objects.filter(course__author=self.request.user)
+            print(applications)
+            return applications
+
     
 
 
