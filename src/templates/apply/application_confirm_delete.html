@@ -1,0 +1,18 @@
+{% extends "base.html" %}{% block content %}
+<div class="content-section">
+  <h1>Delete Application</h1>
+  <form method="POST">
+    {% csrf_token %}
+    <fieldset class="form-group">
+      <legend class="border-bottom mb-4"></legend>
+    </fieldset>
+    <h2 class="mb-4">
+      Are you sure you want to delete your application to {{ object.course }}?
+    </h2>
+    <div class="form-group">
+      <button class="btn btn-outline-danger" type="submit">Yes, Delete</button>
+      <a class="btn btn-outline-info" href="/">No, Go Home</a>
+    </div>
+  </form>
+</div>
+{% endblock content %}

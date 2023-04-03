@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 # from .forms import ApplicationForm
 from .models import Apply
 from add_course.models import Course
-from django.views.generic import CreateView, ListView
+from django.views.generic import CreateView, ListView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 class ApplyView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
@@ -21,7 +21,7 @@ class ApplyView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     
 class ApplicationsListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     model = Apply
-    template_name = 'apply/applications.html'
+    template_name = 'apply/professor_applications.html'
     context_object_name = 'applications'
     
     def test_func(self):
@@ -36,8 +36,30 @@ class ApplicationsListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
             applications = Apply.objects.filter(course__author=self.request.user)
             print(applications)
             return applications
+        
+
+class StudentApplicationsListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
+    model = Apply
+    template_name = 'apply/student_applications.html'
+    context_object_name = 'applications'
+    
+    def test_func(self):
+        return not self.request.user.is_staff
+    
+    def get_queryset(self):
+        applications = Apply.objects.filter(author=self.request.user)
+        print(applications)
+        return applications
 
     
+class ApplicationDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Apply
+    template_name = 'apply/application_confirm_delete.html'
+    success_url = '/'
+    
+    def test_func(self):
+        application = self.get_object()
+        return self.request.user == application.author or self.request.user.is_superuser
 
 
 
