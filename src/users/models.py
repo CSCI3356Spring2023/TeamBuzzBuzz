@@ -67,5 +67,14 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
             if applications < 5:
                 return True
         return False
+    
+    def has_already_applied(self, course_id):
+        if not self.is_staff:
+            Apply = apps.get_model('apply', 'Apply')
+            applications = Apply.objects.filter(author=self, course=course_id).count()
+            if applications > 0:
+                return True
+        return False
+        
             
 
