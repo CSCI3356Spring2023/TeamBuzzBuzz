@@ -12,9 +12,13 @@ class ApplyView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     success_url = '/'
 
     def form_valid(self, form):
-        form.instance.author = self.request.user
-        form.instance.course = get_object_or_404(Course, id=self.kwargs['app_id'])
-        return super().form_valid(form)
+        if self.request.user.can_apply():
+            form.instance.author = self.request.user
+            form.instance.course = get_object_or_404(Course, id=self.kwargs['app_id'])
+            return super().form_valid(form)
+        else:
+            form.add_error(None, "You have already reached the maximum number of applications (5)")
+            return self.form_invalid(form)
     
     def test_func(self):
         return not self.request.user.is_staff

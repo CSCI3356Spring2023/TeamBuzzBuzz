@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db import models
 from django.contrib.auth.models import Group, Permission
+from django.apps import apps
 
 class CustomUserManager(BaseUserManager):
 
@@ -57,4 +58,14 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name', 'gpa', 'year', 'is_staff']
+
+
+    def can_apply(self):
+        if not self.is_staff:
+            Apply = apps.get_model('apply', 'Apply')
+            applications = Apply.objects.filter(author=self).count()
+            if applications < 5:
+                return True
+        return False
+            
 
