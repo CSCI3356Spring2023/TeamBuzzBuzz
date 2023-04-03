@@ -4,7 +4,7 @@ from django.urls import path
 
 # from signup.views import signup_view
 # from add_course.views import add_course_view
-from course_list.views import course_list_view
+from course_list.views import course_list_view, professor_courses_view
 from users.views import register as register_view
 from users.views import profile as profile_view
 # from apply.views import apply_view
@@ -24,9 +24,10 @@ urlpatterns = [
     
     path('add_course/', CourseCreateView.as_view(), name='add_course'),
     path('apply/<int:app_id>/', ApplyView.as_view(), name='apply'),
+    path('course_list/', course_list_view, name='course_list'),
     
     # path('add_course/', add_course_view, name='add_course'),
-    path('course_list/', course_list_view, name='course_list'),
+    
     # path('course_list/apply/<int:app_id>/', apply_view, name='apply'),
     path('landing/<str:email>/<str:usertype>/', landing_view, name = 'landing'),
     # use this if you want different landing pages per user type
