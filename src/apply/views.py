@@ -10,6 +10,7 @@ class ApplyView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     template_name = 'apply/apply.html'
     fields = ['additional_information']
     success_url = '/'
+    # context_object_name = 'course'
 
     def form_valid(self, form):
         if self.request.user.has_already_applied(self.kwargs['app_id']):
