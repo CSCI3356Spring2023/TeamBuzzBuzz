@@ -1,37 +1,16 @@
-<<<<<<< HEAD
-{% extends 'base.html' %} {% load crispy_forms_tags %} {% block content %}
-<h1>Apply</h1>
+{% extends 'base.html' %} {% block content %}
+<h1>Apply to {{ course.course_title }}</h1>
 <table>
   <thead>
     <p>Title: {{ course.course_title }}</p>
+    <p>Email: {{ course.email }}</p>
     <p>Discussion: {{ course.discussion}}</p>
     <p>Number of TAs: {{ course.ta_required }}</p>
     <p>Description: {{ course.description }}</p>
   </thead>
 </table>
 <form method="POST">
-  {% csrf_token %} {{form|crispy}}
+  {% csrf_token %} {{form.as_p}}
   <input type="submit" value="Submit Application" />
 </form>
 {% endblock %}
-=======
-
-{% extends 'base.html' %}
-
-{% block content %}
-    <h1>Apply to {{ course.course_title }} </h1>
-    <table>
-        <thead>
-            <p>Title: {{ course.course_title }}</p>
-            <p>Email: {{ course.email }}</p>
-            <p>Discussion: {{ course.discussion}}</p>
-            <p>Number of TAs: {{ course.ta_required }}</p>
-            <p>Description: {{ course.description }}</p>
-        </thead>
-    </table>
-    <form method='POST'> {% csrf_token %}
-        {{form.as_p}}
-        <input type='submit' value= 'Submit Application' />
-    </form>
-{% endblock %}
->>>>>>> 6df1e85654a81b43c40929e650dd27c0d042733f
