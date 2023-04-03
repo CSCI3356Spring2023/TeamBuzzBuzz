@@ -33,6 +33,8 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     year = models.PositiveIntegerField(default=2023)  # Add the year field
 
+    # user_id = models.CharField(max_length=50, unique=True)
+
     objects = CustomUserManager()
 
     groups = models.ManyToManyField(

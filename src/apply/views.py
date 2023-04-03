@@ -1,7 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 # from .forms import ApplicationForm
 from .models import Apply
-from django.views.generic import CreateView
+from django.views.generic import CreateView, ListView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 class ApplyView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
@@ -16,6 +16,16 @@ class ApplyView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     
     def test_func(self):
         return not self.request.user.is_staff
+    
+class ApplicationsListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
+    model = Apply
+    template_name = 'apply/applications.html'
+    context_object_name = 'applications'
+    
+    def test_func(self):
+        return self.request.user.is_staff
+    
+    
 
 
 

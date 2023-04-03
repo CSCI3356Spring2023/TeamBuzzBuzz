@@ -4,7 +4,7 @@ from django.urls import path
 
 # from signup.views import signup_view
 # from add_course.views import add_course_view
-from course_list.views import course_list_view, professor_courses_view
+# from course_list.views import course_list_view, professor_courses_view
 from users.views import register as register_view
 from users.views import profile as profile_view
 # from apply.views import apply_view
@@ -13,6 +13,7 @@ from users.views import profile as profile_view
 from landing_page.views import landing_view
 from add_course.views import CourseCreateView
 from apply.views import ApplyView
+from course_list.views import CourseListView, ProfessorCoursesView
 # Can't render add_course if the view is from pages for some reason
 urlpatterns = [
     path('', landing_view, name='home'),
@@ -24,7 +25,12 @@ urlpatterns = [
     
     path('add_course/', CourseCreateView.as_view(), name='add_course'),
     path('apply/<int:app_id>/', ApplyView.as_view(), name='apply'),
-    path('course_list/', course_list_view, name='course_list'),
+    path('course_list/', CourseListView.as_view(), name='course_list'),
+    path('course_list/<str:name>/', ProfessorCoursesView.as_view(), name='professor_courses'),
+
+
+
+    # path('course_list/', course_list_view, name='course_list'),
     
     # path('add_course/', add_course_view, name='add_course'),
     
