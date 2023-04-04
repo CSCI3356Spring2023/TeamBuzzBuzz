@@ -5,7 +5,7 @@
 </h1>
 {% else %}
 <h1>Courses</h1>
-{% endif %} {% if user.is_authenticated and user.is_staff and not filtered %}
+{% endif %} {% if user.is_authenticated and user.is_staff%}
 <h4><a href="{% url 'add_course' %}"> Add Course </a></h4>
 {% endif %} {% if filtered %}
 <h4><a href="{% url 'course_list' %}"> Go Back </a></h4>
