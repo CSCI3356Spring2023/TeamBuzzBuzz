@@ -49,11 +49,21 @@ class ApplicationsListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
             return applications
 
     def send_offer_email(request):
+    # form.instance.author = self.request.user
+    # form.instance.course = get_object_or_404(Course, id=self.kwargs['app_id'])
+    # send_mail(
+    #     'TA Offer for {}'.format(form.instance.course.course_title),
+    #     'Here is the message.',
+    #     'kykoh906@gmail.com',
+    #     ['kohke@bc.edu'],
+    #     fail_silently=False,
+    # )
+
         send_mail(
             'TA Offer Notice',
             'Here is the message.',
-            'denga@bc.edu',
-            ['denga@bc.edu'],
+            'tasystem2023@gmail.com',
+            ['kohke@bc.edu'],
             fail_silently=False,
         )
         return redirect('professor_applications')
