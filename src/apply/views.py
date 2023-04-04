@@ -4,24 +4,26 @@ from .models import Apply
 from add_course.models import Course
 from django.views.generic import CreateView, ListView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.messages.views import SuccessMessageMixin
 
 from django.core.mail import send_mail 
 from django.urls import reverse
 
-class ApplyView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+class ApplyView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Apply
     template_name = 'apply/apply.html'
     fields = ['additional_information']
     success_url = '/'
-    # context_object_name = 'course'
+    success_message = "Application submitted successfully"
+    # context_object_name = 'course'i
 
     def form_valid(self, form):
         if self.request.user.has_already_applied(self.kwargs['app_id']):
             form.add_error(None, "You have already applied for this course")
-            return self.form_invalid(form)
+            return super().form_invalid(form)
         if not self.request.user.can_apply():
             form.add_error(None, "You have already reached the maximum number of applications (5)")
-            return self.form_invalid(form)
+            return super().form_invalid(form)
         form.instance.author = self.request.user
         form.instance.course = get_object_or_404(Course, id=self.kwargs['app_id'])
         return super().form_valid(form)
@@ -29,8 +31,8 @@ class ApplyView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     def test_func(self):
         return not self.request.user.is_staff
 
-    def get_context_data(self):
-        context = super().get_context_data()
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
         context['course'] = Course.objects.get(id=self.kwargs['app_id'])
         return context
     
@@ -88,10 +90,12 @@ class StudentApplicationsListView(LoginRequiredMixin, UserPassesTestMixin, ListV
         return applications
 
     
-class ApplicationDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+class ApplicationDeleteView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Apply
     template_name = 'apply/application_confirm_delete.html'
     success_url = '/'
+    success_message = "Application deleted successfully"
+
     
     def test_func(self):
         application = self.get_object()
