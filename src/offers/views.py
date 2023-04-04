@@ -23,4 +23,3 @@ class OfferListStudentView(LoginRequiredMixin, ListView):
         offer_list = Offer.objects.filter(author=self.request.user)
         print(offer_list)
         return offer_list    
-    
