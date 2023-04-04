@@ -28,6 +28,11 @@ class ApplyView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     
     def test_func(self):
         return not self.request.user.is_staff
+
+    def get_context_data(self):
+        context = super().get_context_data()
+        context['course'] = Course.objects.get(id=self.kwargs['app_id'])
+        return context
     
     
 class ApplicationsListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
