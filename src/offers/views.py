@@ -10,10 +10,17 @@ from .models import Offer
 
 
 # Create your views here.
-class OfferListView(LoginRequiredMixin, ListView):
+class OfferListStudentView(LoginRequiredMixin, ListView):
     model = Offer
-    template_name = 'offer/offer_list.html'
+    template_name = 'offer/student_offer.html'
     ordering = ['time_stamp']
     context_object_name = 'offer_list'
+
+    def test_func(self):
+        return not self.request.user.is_staff or self.request.user.is_superuser
     
+    def get_queryset(self):
+        offer_list = Offer.objects.filter(author=self.request.user)
+        print(offer_list)
+        return offer_list    
     
