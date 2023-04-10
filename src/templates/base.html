@@ -65,13 +65,13 @@
               {% if user.is_authenticated %} {% if user.is_staff %}
               <a 
                 class="nav-item nav-link" 
-                href="{% url 'student_offer' %}" 
+                href="{% url 'professor_offers' user.id%}" 
                 >Offers</a
               >
               {% else %}
               <a
                 class="nav-item nav-link"
-                href="{% url 'student_offer' %}"
+                href="{% url 'student_offers' user.id%}"
                 >Offers</a
               >
               {% endif %} {% endif %}

@@ -10,6 +10,35 @@ from .models import Offer
 
 
 # Create your views here.
+
+
+class OfferListView(LoginRequiredMixin, ListView):
+    model = Offer
+    template_name = 'offer/professor_offer.html'
+    ordering = ['time_stamp']
+    context_object_name = 'offer_list'
+    
+    def test_func(self):
+        return self.request.user.is_superuser
+
+class OfferListProfessorView(LoginRequiredMixin, ListView):
+    model = Offer
+    template_name = 'offer/professor_offer.html'
+    ordering = ['time_stamp']
+    context_object_name = 'offer_list'
+
+    def test_func(self):
+        return self.request.user.is_staff or self.request.user.is_superuser
+    
+    # returns the things passed down in the context named 'offer_list'
+    def get_queryset(self, *args, **kwargs):
+        key = self.kwargs['pk']
+        user = CustomUser.objects.get(pk=key)
+        offer_list = Offer.objects.filter(sender=user)
+        print(offer_list)
+        return offer_list    
+
+
 class OfferListStudentView(LoginRequiredMixin, ListView):
     model = Offer
     template_name = 'offer/student_offer.html'
@@ -18,8 +47,27 @@ class OfferListStudentView(LoginRequiredMixin, ListView):
 
     def test_func(self):
         return not self.request.user.is_staff or self.request.user.is_superuser
+        
+    def get_queryset(self, *args, **kwargs):
+        key = self.kwargs['pk']
+        user = CustomUser.objects.get(pk=key)
+        offer_list = Offer.objects.filter(recipient=user)
+        print("offer: ", offer_list)
+        
+        return offer_list   
     
-    def get_queryset(self):
-        offer_list = Offer.objects.filter(author=self.request.user)
-        print(offer_list)
-        return offer_list    
+    #offer doesn't save the is_accpeted state
+    def acceptOffer(request, **kwargs):
+        key = kwargs.get('pk')
+        user = CustomUser.objects.get(pk=key)
+        offer = Offer.objects.get(recipient=request.user)
+        offer.is_rejected = True
+        offer.save()
+        return redirect('student_offers')
+        
+    def rejectOffer(request,**kwargs):
+        offer = Offer.objects.get(recipient=request.user)
+        offer.is_rejected = True
+        offer.save()
+        return redirect('student_offers')
+        
