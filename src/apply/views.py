@@ -2,31 +2,41 @@ from django.shortcuts import render, redirect, get_object_or_404
 # from .forms import ApplicationForm
 from .models import Apply
 from add_course.models import Course
+from offers.models import Offer
 from django.views.generic import CreateView, ListView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.messages.views import SuccessMessageMixin
 
 from django.core.mail import send_mail 
 from django.urls import reverse
 
-class ApplyView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+class ApplyView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Apply
     template_name = 'apply/apply.html'
     fields = ['additional_information']
     success_url = '/'
+    success_message = "Application submitted successfully"
+    # context_object_name = 'course'
 
     def form_valid(self, form):
         if self.request.user.has_already_applied(self.kwargs['app_id']):
             form.add_error(None, "You have already applied for this course")
-            return self.form_invalid(form)
+            return super().form_invalid(form)
         if not self.request.user.can_apply():
             form.add_error(None, "You have already reached the maximum number of applications (5)")
-            return self.form_invalid(form)
+            return super().form_invalid(form)
         form.instance.author = self.request.user
         form.instance.course = get_object_or_404(Course, id=self.kwargs['app_id'])
         return super().form_valid(form)
     
     def test_func(self):
         return not self.request.user.is_staff
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['course'] = Course.objects.get(id=self.kwargs['app_id'])
+        return context
+    
     
 class ApplicationsListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     model = Apply
@@ -34,7 +44,7 @@ class ApplicationsListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     context_object_name = 'applications'
     
     def test_func(self):
-        return self.request.user.is_staff
+        return self.request.user.is_staff or self.request.user.is_superuser
     
     def get_queryset(self):
         if self.request.user.is_superuser:
@@ -45,15 +55,37 @@ class ApplicationsListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
             applications = Apply.objects.filter(course__author=self.request.user)
             print(applications)
             return applications
-
-    def send_offer_email(request):
-        send_mail(
-            'TA Offer Notice',
-            'Here is the message.',
-            'tasystem2023@gmail.com',
-            ['kohke@bc.edu'],
-            fail_silently=False,
-        )
+        
+    # bug : create_offer can't be found issue
+    # solution : move content to send_offer_email instead
+    def create_offer():
+        # create offer object
+        # find the recipient using the application passed
+        # from the professor html page
+        # application_id = request.GET.get('app_id')
+        
+        # sender = request.user
+        # application_id = app_id
+        # print("application_id: ", application_id)
+        # recipient_application = Apply.objects.get(id=application_id)
+        # offer = Offer(sender=sender, recipient=recipient_application.author, course=recipient_application.course)
+        # offer.save()
+        pass
+        
+    def send_offer_email(request, **kwargs):
+        # send_mail(
+        #     'TA Offer Notice From {} {}'.format(request.user.first_name, request.user.last_name),
+        #     'Here is the message.',
+        #     'tasystem2023@gmail.com',
+        #     ['kohke@bc.edu'],
+        #     fail_silently=False,
+        # )
+        sender = request.user
+        application_id = kwargs.get('app_id', 0)
+        print("application_id: ", application_id)
+        recipient_application = Apply.objects.get(id=application_id)
+        offer = Offer(sender=sender, recipient=recipient_application.author, course=recipient_application.course)
+        offer.save()
         return redirect('professor_applications')
         
 
@@ -63,7 +95,7 @@ class StudentApplicationsListView(LoginRequiredMixin, UserPassesTestMixin, ListV
     context_object_name = 'applications'
     
     def test_func(self):
-        return not self.request.user.is_staff
+        return not self.request.user.is_staff or self.request.user.is_superuser
     
     def get_queryset(self):
         applications = Apply.objects.filter(author=self.request.user)
@@ -71,10 +103,12 @@ class StudentApplicationsListView(LoginRequiredMixin, UserPassesTestMixin, ListV
         return applications
 
     
-class ApplicationDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+class ApplicationDeleteView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Apply
     template_name = 'apply/application_confirm_delete.html'
     success_url = '/'
+    success_message = "Application deleted successfully"
+
     
     def test_func(self):
         application = self.get_object()

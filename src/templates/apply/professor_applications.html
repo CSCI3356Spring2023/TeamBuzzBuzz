@@ -15,10 +15,10 @@
       <td>{{ app.author.first_name }} {{ app.author.last_name }}</td>
       <td>{{ app.course.course_title }}</td>
       <td><a href="#"> Review </a></td>
-      <td><a href="{% url 'send_offer_email' %}">Send Offer</a><td>
+      <td><a href="{% url 'send_offer_email' app_id=app.id %}">Send Offer</a></td>
     </tr>
+
     {% endfor %}
-    </tr>
   </tbody>
 </table>
 {% endblock %}

@@ -62,10 +62,28 @@
                 >Applications</a
               >
               {% endif %}
-              <a class="nav-item nav-link" href="#">Offers</a>
+              {% if user.is_authenticated %} {% if user.is_staff %}
+              <a 
+                class="nav-item nav-link" 
+                href="{% url 'professor_offers' user.id%}" 
+                >Offers</a
+              >
+              {% else %}
+              <a
+                class="nav-item nav-link"
+                href="{% url 'student_offers' user.id%}"
+                >Offers</a
+              >
+              {% endif %} {% endif %}
+              {% if user.is_staff and not user.is_superuser %}
+              <a class="nav-item nav-link" href="{% url 'professor_courses' user.id%}"
+                >Course List</a
+              >
+              {% else %}
               <a class="nav-item nav-link" href="{% url 'course_list' %}"
                 >Course List</a
               >
+              {% endif %}
               {% if user.is_staff %}
               <a class="nav-item nav-link" href="{% url 'add_course' %}"
                 >Add Course</a

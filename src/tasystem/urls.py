@@ -14,6 +14,8 @@ from landing_page.views import landing_view
 from add_course.views import CourseCreateView
 from apply.views import ApplyView, ApplicationsListView, StudentApplicationsListView, ApplicationDeleteView
 from course_list.views import CourseListView, ProfessorCoursesView
+from offers.views import OfferListStudentView, OfferListView, OfferListProfessorView
+
 # Can't render add_course if the view is from pages for some reason
 urlpatterns = [
     path('', landing_view, name='home'),
@@ -30,9 +32,13 @@ urlpatterns = [
     path('professor_applications/', ApplicationsListView.as_view(), name='professor_applications'),
     path('student_applications/', StudentApplicationsListView.as_view(), name='student_applications'),
     path('application_confirm_delete/<int:pk>/', ApplicationDeleteView.as_view(), name='application_confirm_delete'),
+    path('student_offer/<int:pk>/', OfferListStudentView.as_view(), name='student_offers'),
+    path('offer/', OfferListView.as_view(), name='admin_offers'),
+    path('professor_offer/<int:pk>/', OfferListProfessorView.as_view(), name='professor_offers'),
+    path('student_offer/<int:pk>/', OfferListStudentView.acceptOffer, name='offer_accept'),
+    path('student_offer/<int:pk>/', OfferListStudentView.rejectOffer, name='offer_reject'),
 
-
-    path('send_offer_email/', ApplicationsListView.send_offer_email, name = 'send_offer_email'),
+    path('send_offer_email/<int:app_id>', ApplicationsListView.send_offer_email, name = 'send_offer_email'),
 
 
     # path('course_list/', course_list_view, name='course_list'),

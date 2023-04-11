@@ -9,11 +9,14 @@ from django.views.generic import (
     DeleteView
     )
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.messages.views import SuccessMessageMixin
 
-class CourseCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+class CourseCreateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Course
     template_name = 'add_course/add_course.html'
     fields = ['course_title', 'discussion', 'ta_required', 'description']
+    success_url = '/'
+    success_message = "Course added successfully"
 
     def form_valid(self, form):
         form.instance.author = self.request.user
