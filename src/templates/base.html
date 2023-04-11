@@ -44,28 +44,33 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarToggle">
             <div class="navbar-nav mr-auto">
-
               <!-- <a class="nav-item nav-link" href="{% url 'home' %}">Home</a>
               <a class="nav-item nav-link" href="{% url 'add_course' %}"
                 >Add Course</a
               >
               <a class="nav-item nav-link" href="{% url 'signup' %}">Apply</a> -->
-              <a class="nav-item nav-link" href="{% url 'profile' %}"
-                >Profile</a
+              {% if user.is_authenticated %} {% if user.is_staff %}
+              <a
+                class="nav-item nav-link"
+                href="{% url 'professor_applications' %}"
+                >Applications</a
               >
-              <a class="nav-item nav-link" href="{% url 'course_list' %}">Courses</a>
-              <a class="nav-item nav-link" href="#">Applications</a>
+              {% else %}
+              <a
+                class="nav-item nav-link"
+                href="{% url 'student_applications' %}"
+                >Applications</a
+              >
+              {% endif %}
               <a class="nav-item nav-link" href="#">Offers</a>
-
-              <a class="nav-item nav-link" href="{% url 'home' %}">Home</a>
-              <!-- <a class="nav-item nav-link" href="{% url 'home' %}"
-                >Landing Page</a
-              > -->
+              <a class="nav-item nav-link" href="{% url 'course_list' %}"
+                >Course List</a
+              >
+              {% if user.is_staff %}
               <a class="nav-item nav-link" href="{% url 'add_course' %}"
                 >Add Course</a
               >
-              <a class="nav-item nav-link" href="{% url 'course_list' %}">Courses</a>
-
+              {% endif %} {% endif %}
             </div>
             <!-- Navbar Right Side -->
             <div class="navbar-nav">
