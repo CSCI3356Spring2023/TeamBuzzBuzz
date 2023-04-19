@@ -3,13 +3,15 @@ from django.db import models
 from django.contrib.auth.models import Group, Permission
 from django.apps import apps
 
+
 class CustomUserManager(BaseUserManager):
 
     def _create_user(self, email, first_name, last_name, gpa, year, password, **extra_fields):
         if not email:
             raise ValueError('The Email must be set')
         email = self.normalize_email(email)
-        user = self.model(email=email, first_name=first_name, last_name=last_name, gpa=gpa, year=year, **extra_fields)
+        user = self.model(email=email, first_name=first_name,
+                          last_name=last_name, gpa=gpa, year=year, **extra_fields)
         user.set_password(password)
         user.save()
         return user
@@ -24,6 +26,7 @@ class CustomUserManager(BaseUserManager):
             raise ValueError('Superuser must have is_superuser=True.')
 
         return self._create_user(email, first_name, last_name, gpa, year, password, **extra_fields)
+
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
@@ -59,7 +62,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name', 'gpa', 'year', 'is_staff']
 
-
     def can_apply(self):
         if not self.is_staff:
             Apply = apps.get_model('apply', 'Apply')
@@ -67,14 +69,12 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
             if applications < 5:
                 return True
         return False
-    
+
     def has_already_applied(self, course_id):
         if not self.is_staff:
             Apply = apps.get_model('apply', 'Apply')
-            applications = Apply.objects.filter(author=self, course=course_id).count()
+            applications = Apply.objects.filter(
+                author=self, course=course_id).count()
             if applications > 0:
                 return True
         return False
-        
-            
-

@@ -10,8 +10,6 @@ from .models import Offer
 
 
 # Create your views here.
-
-
 class OfferListView(LoginRequiredMixin, ListView):
     model = Offer
     template_name = 'offer/professor_offer.html'
@@ -57,11 +55,11 @@ class OfferListStudentView(LoginRequiredMixin, ListView):
         return offer_list   
     
     #offer doesn't save the is_accpeted state
-    def acceptOffer(request, **kwargs):
+    def acceptOffer(request, *args, **kwargs):
         key = kwargs.get('pk')
         user = CustomUser.objects.get(pk=key)
         offer = Offer.objects.get(recipient=request.user)
-        offer.is_rejected = True
+        offer.is_rejected = False
         offer.save()
         return redirect('student_offers')
         

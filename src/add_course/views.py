@@ -1,15 +1,22 @@
 from django.shortcuts import render
 # from .forms import AddCourseForm
-from .models import Course
+from .models import Course, SupplementalQuestion
 from django.views.generic import (
-    ListView, 
-    DetailView, 
-    CreateView, 
-    UpdateView, 
+    ListView,
+    DetailView,
+    CreateView,
+    UpdateView,
     DeleteView
-    )
+)
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.messages.views import SuccessMessageMixin
+from django.forms import inlineformset_factory
+
+
+SupplementalQuestionFormSet = inlineformset_factory(
+    Course, SupplementalQuestion, fields=('question_text',), extra=1, can_delete=True
+)
+
 
 class CourseCreateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Course
@@ -21,7 +28,11 @@ class CourseCreateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMi
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
-    
+
+    # def form_valid(self, form):
+    #     form.instance.author = self.request.user
+    #     return super().form_valid(form)
+
     def test_func(self):
         return self.request.user.is_staff
 
@@ -36,9 +47,9 @@ class CourseCreateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMi
 #             my_form.save()
 #         else:
 #             print(my_form.errors)
-        
+
 #         my_form = AddCourseForm()
-    
+
 #     context = {
 # 		"form" : my_form
 # 	}

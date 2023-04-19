@@ -2,6 +2,7 @@ from django.db import models
 from users.models import CustomUser as User
 from django.urls import reverse
 
+
 class Course(models.Model):
     OPTIONS = (
         ('1', '1'),
@@ -23,6 +24,14 @@ class Course(models.Model):
 
     def __str__(self):
         return self.course_title
-    
+
     def get_absolute_url(self):
         return reverse('home')
+
+
+class SupplementalQuestion(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    question_text = models.TextField()
+
+    def __str__(self):
+        return self.question_text
