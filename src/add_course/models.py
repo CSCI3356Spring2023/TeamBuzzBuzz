@@ -20,7 +20,7 @@ class Course(models.Model):
     ta_required = models.CharField(max_length=100, choices=OPTIONS)
     description = models.CharField(max_length=100)
 
-    author = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, default=None, related_name='added_courses')
 
     def __str__(self):
         return self.course_title
