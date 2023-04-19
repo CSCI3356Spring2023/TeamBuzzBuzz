@@ -12,7 +12,7 @@ from users.views import profile as profile_view
 # from landing_page.views import student_view, professor_view, admin_view
 from landing_page.views import landing_view
 from add_course.views import CourseCreateView
-from add_oldcourse.views import CourseCreateView
+from add_oldcourse.views import OldCourseCreateView
 from apply.views import ApplyView, ApplicationsListView, StudentApplicationsListView, ApplicationDeleteView
 from course_list.views import CourseListView, ProfessorCoursesView
 from offers.views import OfferListStudentView, OfferListView, OfferListProfessorView
@@ -41,7 +41,7 @@ urlpatterns = [
 
     path('send_offer_email/<int:app_id>', ApplicationsListView.send_offer_email, name = 'send_offer_email'),
 
-    path('add_oldcourse/', CourseCreateView.as_view(), name='add_oldcourse'),
+    path('add_oldcourse/', OldCourseCreateView.as_view(), name='add_oldcourse'),
     # path('course_list/', course_list_view, name='course_list'),
     
     # path('add_course/', add_course_view, name='add_course'),
