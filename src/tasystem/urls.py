@@ -59,6 +59,7 @@ urlpatterns = [
          name='show_normaloldcourse'),
     path('show_oldcourse/<int:pk>/',
          ProfessorOldCoursesView.as_view(), name='show_oldcourse'),
+    path('save_old_course/<int:course_id>', NormalCourseListView.save_old_course, name = 'save_old_course'),
     # path('course_list/', course_list_view, name='course_list'),
 
     # path('add_course/', add_course_view, name='add_course'),
