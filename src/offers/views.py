@@ -15,9 +15,10 @@ class OfferListView(LoginRequiredMixin, ListView):
     template_name = 'offer/professor_offer.html'
     ordering = ['time_stamp']
     context_object_name = 'offer_list'
-    
+
     def test_func(self):
         return self.request.user.is_superuser
+
 
 class OfferListProfessorView(LoginRequiredMixin, ListView):
     model = Offer
@@ -27,14 +28,14 @@ class OfferListProfessorView(LoginRequiredMixin, ListView):
 
     def test_func(self):
         return self.request.user.is_staff or self.request.user.is_superuser
-    
+
     # returns the things passed down in the context named 'offer_list'
     def get_queryset(self, *args, **kwargs):
         key = self.kwargs['pk']
         user = CustomUser.objects.get(pk=key)
         offer_list = Offer.objects.filter(sender=user)
         print(offer_list)
-        return offer_list    
+        return offer_list
 
 
 class OfferListStudentView(LoginRequiredMixin, ListView):
@@ -45,16 +46,16 @@ class OfferListStudentView(LoginRequiredMixin, ListView):
 
     def test_func(self):
         return not self.request.user.is_staff or self.request.user.is_superuser
-        
+
     def get_queryset(self, *args, **kwargs):
         key = self.kwargs['pk']
         user = CustomUser.objects.get(pk=key)
         offer_list = Offer.objects.filter(recipient=user)
         print("offer: ", offer_list)
-        
-        return offer_list   
-    
-    #offer doesn't save the is_accpeted state
+
+        return offer_list
+
+    # offer doesn't save the is_accpeted state
     def acceptOffer(request, *args, **kwargs):
         key = kwargs.get('pk')
         user = CustomUser.objects.get(pk=key)
@@ -62,10 +63,9 @@ class OfferListStudentView(LoginRequiredMixin, ListView):
         offer.is_rejected = False
         offer.save()
         return redirect('student_offers')
-        
-    def rejectOffer(request,**kwargs):
+
+    def rejectOffer(request, **kwargs):
         offer = Offer.objects.get(recipient=request.user)
         offer.is_rejected = True
         offer.save()
         return redirect('student_offers')
-        

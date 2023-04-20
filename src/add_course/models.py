@@ -20,18 +20,18 @@ class Course(models.Model):
     ta_required = models.CharField(max_length=100, choices=OPTIONS)
     description = models.CharField(max_length=100)
 
-    author = models.ForeignKey(User, on_delete=models.CASCADE, default=None, related_name='added_courses')
+    author = models.ForeignKey(
+        User, on_delete=models.CASCADE, default=None, related_name='added_courses')
+
+    supplemental_question_1 = models.CharField(
+        max_length=100, default=None, blank=True)
+    supplemental_question_2 = models.CharField(
+        max_length=100, default=None, blank=True)
+    supplemental_question_3 = models.CharField(
+        max_length=100, default=None, blank=True)
 
     def __str__(self):
         return self.course_title
 
     def get_absolute_url(self):
         return reverse('home')
-
-
-class SupplementalQuestion(models.Model):
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    question_text = models.TextField()
-
-    def __str__(self):
-        return self.question_text

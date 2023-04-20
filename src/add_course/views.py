@@ -1,6 +1,6 @@
 from django.shortcuts import render
 # from .forms import AddCourseForm
-from .models import Course, SupplementalQuestion
+from .models import Course
 from django.views.generic import (
     ListView,
     DetailView,
@@ -13,15 +13,11 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.forms import inlineformset_factory
 
 
-SupplementalQuestionFormSet = inlineformset_factory(
-    Course, SupplementalQuestion, fields=('question_text',), extra=1, can_delete=True
-)
-
-
 class CourseCreateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Course
     template_name = 'add_course/add_course.html'
-    fields = ['course_title', 'discussion', 'ta_required', 'description']
+    fields = ['course_title', 'discussion', 'ta_required', 'description',
+              'supplemental_question_1', 'supplemental_question_2', 'supplemental_question_3']
     success_url = '/'
     success_message = "Course added successfully"
 
