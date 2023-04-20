@@ -3,7 +3,7 @@
   <h1>Course Creation</h1>
   <form action="" method="POST">
     {% csrf_token %} {{form|crispy}}
-    <input type="submit" value="back" />
+    <input type ="button" value="back" onclick="history.back()"/>
     <input type="submit" value="next" />
   </form>
 </div>
