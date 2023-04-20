@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-12">
+      <h1 class="display-4">
+        {{ object.course }} Application Review for {{ object.author.first_name }} {{ object.author.last_name }}
+      </h1>
+      <hr>
+      <p><strong>Applicant Email:</strong> {{ object.author }}</p>
+      <p><strong>{{ object.course.supplemental_question_1 }}</strong> {{ object.supplemental_answer_1 }}</p>
+      <p><strong>{{ object.course.supplemental_question_2 }}</strong> {{ object.supplemental_answer_2 }}</p>
+      <p><strong>{{ object.course.supplemental_question_3 }}</strong> {{ object.supplemental_answer_3 }}</p>
+      <p><strong>Additional Information:</strong> {{ object.additional_information }}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="ml-3">
+      <a href="{% url 'professor_applications' %}" class="btn btn-primary">Back</a>
+    </div>
+    <div class="ml-1">
+      <a href="{% url 'send_offer_email' app_id=object.id %}" class="btn btn-success">Accept</a>
+    </div>
+  </div> 
+</div>
+{% endblock %}

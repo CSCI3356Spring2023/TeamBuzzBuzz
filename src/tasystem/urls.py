@@ -14,7 +14,8 @@ from landing_page.views import landing_view
 from add_course.views import CourseCreateView
 from add_oldcourse.views import OldCourseCreateView
 from show_oldcourse.views import ProfessorOldCoursesView, NormalCourseListView
-from apply.views import ApplyView, ApplicationsListView, StudentApplicationsListView, ApplicationDeleteView
+from apply.views import (ApplyView, ApplicationsListView,
+                         StudentApplicationsListView, ApplicationDeleteView, ApplicationReviewView)
 from course_list.views import CourseListView, ProfessorCoursesView
 from offers.views import OfferListStudentView, OfferListView, OfferListProfessorView
 
@@ -25,36 +26,48 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name="users/login.html"), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name="users/logout.html"), name='logout'),
     path('profile/', profile_view, name='profile'),
-    
-    
+
+
     path('add_course/', CourseCreateView.as_view(), name='add_course'),
     path('apply/<int:app_id>/', ApplyView.as_view(), name='apply'),
     path('course_list/', CourseListView.as_view(), name='course_list'),
-    path('course_list/<int:pk>/', ProfessorCoursesView.as_view(), name='professor_courses'),
-    path('professor_applications/', ApplicationsListView.as_view(), name='professor_applications'),
-    path('student_applications/', StudentApplicationsListView.as_view(), name='student_applications'),
-    path('application_confirm_delete/<int:pk>/', ApplicationDeleteView.as_view(), name='application_confirm_delete'),
-    path('student_offer/<int:pk>/', OfferListStudentView.as_view(), name='student_offers'),
+    path('course_list/<int:pk>/', ProfessorCoursesView.as_view(),
+         name='professor_courses'),
+    path('professor_applications/', ApplicationsListView.as_view(),
+         name='professor_applications'),
+    path('student_applications/', StudentApplicationsListView.as_view(),
+         name='student_applications'),
+    path('application_confirm_delete/<int:pk>/',
+         ApplicationDeleteView.as_view(), name='application_confirm_delete'),
+    path('application_review/<int:pk>/',
+         ApplicationReviewView.as_view(), name='application_review'),
+    path('student_offer/<int:pk>/',
+         OfferListStudentView.as_view(), name='student_offers'),
     path('offer/', OfferListView.as_view(), name='admin_offers'),
-    path('professor_offer/<int:pk>/', OfferListProfessorView.as_view(), name='professor_offers'),
-    path('student_offer/<int:pk>/', OfferListStudentView.acceptOffer, name='offer_accept'),
-    path('student_offer/<int:pk>/', OfferListStudentView.rejectOffer, name='offer_reject'),
+    path('professor_offer/<int:pk>/',
+         OfferListProfessorView.as_view(), name='professor_offers'),
+    path('student_offer/<int:pk>/',
+         OfferListStudentView.acceptOffer, name='offer_accept'),
+    path('student_offer/<int:pk>/',
+         OfferListStudentView.rejectOffer, name='offer_reject'),
 
-    path('send_offer_email/<int:app_id>', ApplicationsListView.send_offer_email, name = 'send_offer_email'),
+    path('send_offer_email/<int:app_id>',
+         ApplicationsListView.send_offer_email, name='send_offer_email'),
 
     path('add_oldcourse/', OldCourseCreateView.as_view(), name='add_oldcourse'),
-    path('show_oldcourse/', NormalCourseListView.as_view(), name='show_normaloldcourse'),
-    path('show_oldcourse/<int:pk>/', ProfessorOldCoursesView.as_view(), name='show_oldcourse'),
+    path('show_oldcourse/', NormalCourseListView.as_view(),
+         name='show_normaloldcourse'),
+    path('show_oldcourse/<int:pk>/',
+         ProfessorOldCoursesView.as_view(), name='show_oldcourse'),
     # path('course_list/', course_list_view, name='course_list'),
-    
+
     # path('add_course/', add_course_view, name='add_course'),
-    
+
     # path('course_list/apply/<int:app_id>/', apply_view, name='apply'),
-    path('landing/<str:email>/<str:usertype>/', landing_view, name = 'landing'),
+    path('landing/<str:email>/<str:usertype>/', landing_view, name='landing'),
     # use this if you want different landing pages per user type
     # path('student/', student_view, name = 'student'),
     # path('professor/', professor_view, name = 'professor'),
     # path('bcadmin/', admin_view, name = 'admin'),
     path('admin/', admin.site.urls),
 ]
-

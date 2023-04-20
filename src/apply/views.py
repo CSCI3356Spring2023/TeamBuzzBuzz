@@ -145,7 +145,7 @@ class StudentApplicationsListView(LoginRequiredMixin, UserPassesTestMixin, ListV
         return applications
 
 
-class ApplicationDeleteView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+class ApplicationDeleteView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixin, ListView):
     model = Apply
     template_name = 'apply/application_confirm_delete.html'
     success_url = '/'
@@ -156,31 +156,22 @@ class ApplicationDeleteView(SuccessMessageMixin, LoginRequiredMixin, UserPassesT
         return self.request.user == application.author or self.request.user.is_superuser
 
 
-# add decorator to make this only accessible to students and admin
-# def apply_view(request, app_id):
-#     course_data = Course.objects.get(id=app_id)
+class ApplicationReviewView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    model = Apply
+    template_name = 'apply/application_review.html'
+    success_url = '/'
+    success_message = "Application accepted!"
 
-#     print(course_data)
-#     form = ApplicationForm()
-#     if request.method == "POST":
-#         form = ApplicationForm(request.POST or None)
-#         print("Posting Data")
-#         if form.is_valid():
-#             print("cleaned data: ", form.cleaned_data)
-#             application = form.save()
-#             application.course_title = course_data.course_title
-#             application.discussion = course_data.discussion
-#             application.description = course_data.description
-#             application.email = course_data.email
-#             application.ta_required = course_data.ta_required
-#             form.save()
-#         else:
-#             print(form.errors)
+    def test_func(self):
+        application = self.get_object()
+        return self.request.user == application.course.author or self.request.user.is_superuser
 
-#         form = ApplicationForm()
-#     context = {
-#         'course' : course_data,
-#         'form' : form
-#     }
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        application = Apply.objects.get(id=self.kwargs['pk'])
+        context['application'] = application
+        context['student'] = application.author
+        return context
 
-#     return render(request, 'apply/apply.html', context)
+    def get_success_url(self):
+        return reverse('professor_applications')
