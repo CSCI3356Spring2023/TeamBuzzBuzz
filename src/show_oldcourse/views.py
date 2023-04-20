@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from add_course.models import Course
+from add_oldcourse.models import Course
 from users.models import CustomUser
 from django.contrib.auth.decorators import login_required
 
