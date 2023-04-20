@@ -33,7 +33,10 @@
         </a>
       </td>
       {% if not user.is_staff %}
-      <th><input type="checkbox" id="my-checkbox" name="my-checkbox" value="1" {% if checked %}checked{% endif %}></th>
+      <th><form method="post" action="{% url 'save_old_course' course.id%}">
+          {% csrf_token %}
+          <input type="checkbox" name="my_checkbox" id="my_checkbox">
+      </form></th>
       {% endif %}
     </tr>
     {% endfor %}

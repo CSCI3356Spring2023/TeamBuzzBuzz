@@ -16,8 +16,6 @@
   	{% endif %}
   	{% if user.is_staff %}
   	<a class="nav-item nav-link" href="{% url 'add_oldcourse' %}"> Add Previous Course </a> </h4>
-    {% else %}
-    <a class="nav-item nav-link" href="{% url 'show_normaloldcourse' %}"> Add Previous Course </a> </h4>
   	{% endif %}
     <button class="btn btn-outline-info" type="submit">Update</button>
   </div>

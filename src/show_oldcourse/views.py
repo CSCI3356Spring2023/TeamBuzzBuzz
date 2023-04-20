@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from add_oldcourse.models import Course
+from student_oldcourse.models import OldCourse
 from users.models import CustomUser
 from django.contrib.auth.decorators import login_required
 
@@ -12,6 +13,24 @@ class NormalCourseListView(LoginRequiredMixin, ListView):
     template_name = 'show_oldcourse/show_oldcourse.html'
     ordering = ['course_title']
     context_object_name = 'course_data'
+
+    def save_old_course(request, **kwargs):
+        if request.POST.get('my_checkbox'):
+            # do something when the checkbox is checked
+            print('hello')
+            print(kwargs)
+        else:
+            print(kwargs)
+            # do something when the checkbox is unchecked
+
+        # sender = request.user
+        # application_id = kwargs.get('app_id', 0)
+        # print("application_id: ", application_id)
+        # recipient_application = Apply.objects.get(id=application_id)
+        # offer = Offer(sender=sender, recipient=recipient_application.author,
+        #               course=recipient_application.course)
+        # offer.save()
+        return redirect('show_normaloldcourse')
 
 class ProfessorOldCoursesView(LoginRequiredMixin, ListView):
     model = Course

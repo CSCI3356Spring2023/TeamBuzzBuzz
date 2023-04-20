@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'offers.apps.OffersConfig',
     'add_oldcourse.apps.AddOldcourseConfig',
     'show_oldcourse.apps.ShowOldcourseConfig',
+    'student_oldcourse.apps.StudentOldcourseConfig',
 
     # third party apps
     'crispy_forms',
