@@ -7,6 +7,11 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import ObjectDoesNotExist
 
+class NormalCourseListView(LoginRequiredMixin, ListView):
+    model = Course
+    template_name = 'show_oldcourse/show_oldcourse.html'
+    ordering = ['course_title']
+    context_object_name = 'course_data'
 
 class ProfessorOldCoursesView(LoginRequiredMixin, ListView):
     model = Course

@@ -7,6 +7,14 @@
     {{ form|crispy }}
   </fieldset>
   <div class="form-group">
+  	{% if user.is_superuser %}
+  	<h4><a class="nav-item nav-link" href="{% url 'show_normaloldcourse'%}"> View Old Courses </a>
+  	{% elif user.is_staff %}
+  	<h4><a class="nav-item nav-link" href="{% url 'show_oldcourse' user.id %}"> View Old Courses </a>
+  	{% endif %}
+  	{% if user.is_staff %}
+	<a class="nav-item nav-link" href="{% url 'add_oldcourse' %}"> Add Course </a> </h4>
+	{% endif %}
     <button class="btn btn-outline-info" type="submit">Update</button>
   </div>
 </form>
