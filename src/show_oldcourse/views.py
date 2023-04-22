@@ -15,21 +15,12 @@ class NormalCourseListView(LoginRequiredMixin, ListView):
     context_object_name = 'course_data'
 
     def save_old_course(request, **kwargs):
-        if request.POST.get('my_checkbox'):
-            # do something when the checkbox is checked
-            print('hello')
-            print(kwargs)
-        else:
-            print(kwargs)
-            # do something when the checkbox is unchecked
-
-        # sender = request.user
-        # application_id = kwargs.get('app_id', 0)
-        # print("application_id: ", application_id)
-        # recipient_application = Apply.objects.get(id=application_id)
-        # offer = Offer(sender=sender, recipient=recipient_application.author,
-        #               course=recipient_application.course)
-        # offer.save()
+        sender = request.user
+        course_id = kwargs.get('course_id', 0)
+        print("course_id: ", course_id)
+        course = Course.objects.get(id=course_id)
+        studentoldcourse = OldCourse(course_title = course.course_title, year = course.year, semester = course.semester, author = course.author, taker = sender )
+        studentoldcourse.save()
         return redirect('show_normaloldcourse')
 
 class ProfessorOldCoursesView(LoginRequiredMixin, ListView):

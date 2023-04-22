@@ -14,6 +14,7 @@ from landing_page.views import landing_view
 from add_course.views import CourseCreateView
 from add_oldcourse.views import OldCourseCreateView
 from show_oldcourse.views import ProfessorOldCoursesView, NormalCourseListView
+from student_oldcourse.views import StudentOldCoursesView
 from apply.views import (ApplyView, ApplicationsListView,
                          StudentApplicationsListView, ApplicationDeleteView, ApplicationReviewView)
 from course_list.views import CourseListView, ProfessorCoursesView
@@ -60,6 +61,8 @@ urlpatterns = [
     path('show_oldcourse/<int:pk>/',
          ProfessorOldCoursesView.as_view(), name='show_oldcourse'),
     path('save_old_course/<int:course_id>', NormalCourseListView.save_old_course, name = 'save_old_course'),
+
+    path('show_student_old_course/<int:pk>', StudentOldCoursesView.as_view(), name = 'show_student_old_course'),
     # path('course_list/', course_list_view, name='course_list'),
 
     # path('add_course/', add_course_view, name='add_course'),
