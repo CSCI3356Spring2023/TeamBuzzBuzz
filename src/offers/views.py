@@ -56,16 +56,16 @@ class OfferListStudentView(LoginRequiredMixin, ListView):
         return offer_list
 
     # offer doesn't save the is_accpeted state
-    def acceptOffer(request, *args, **kwargs):
+    def acceptOffer(request, **kwargs):
         key = kwargs.get('pk')
-        user = CustomUser.objects.get(pk=key)
-        offer = Offer.objects.get(recipient=request.user)
-        offer.is_rejected = False
+        offer = Offer.objects.get(id=key)
+        offer.is_accepted = True
         offer.save()
-        return redirect('student_offers')
+        return redirect('student_offers', pk = request.user.id)
 
     def rejectOffer(request, **kwargs):
-        offer = Offer.objects.get(recipient=request.user)
+        key = kwargs.get('pk')
+        offer = Offer.objects.get(id=key)
         offer.is_rejected = True
         offer.save()
-        return redirect('student_offers')
+        return redirect('student_offers', pk = request.user.id)

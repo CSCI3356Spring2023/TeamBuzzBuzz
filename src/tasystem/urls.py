@@ -47,9 +47,9 @@ urlpatterns = [
     path('offer/', OfferListView.as_view(), name='admin_offers'),
     path('professor_offer/<int:pk>/',
          OfferListProfessorView.as_view(), name='professor_offers'),
-    path('student_offer/<int:pk>/',
+    path('student_offer_accept/<int:pk>/',
          OfferListStudentView.acceptOffer, name='offer_accept'),
-    path('student_offer/<int:pk>/',
+    path('student_offer_reject/<int:pk>/',
          OfferListStudentView.rejectOffer, name='offer_reject'),
 
     path('send_offer_email/<int:app_id>',

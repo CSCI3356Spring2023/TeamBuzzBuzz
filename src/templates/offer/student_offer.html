@@ -15,8 +15,8 @@
             <td>{{offer.sender.first_name}}{{offer.sender.last_name}}</td>
             <td>{{offer.course.course_title}}</td>
             <td>
-                <a href="{% url 'offer_accept' user.id%}"> Accept </a>
-                <a href="{% url 'offer_reject' user.id%}"> Decline </a>
+                <a href="{% url 'offer_accept' offer.id%}"> Accept </a>
+                <a href="{% url 'offer_reject' offer.id%}"> Decline </a>
             </td>
         </tr>
         {%endfor %}
