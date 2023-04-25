@@ -37,6 +37,9 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     year = models.PositiveIntegerField(default=2023)
 
+    course_working_for = models.ForeignKey(
+        'add_course.Course', on_delete=models.CASCADE, default=None, null=True, blank=True)
+
     # user_id = models.CharField(max_length=50, unique=True)
 
     objects = CustomUserManager()
@@ -74,7 +77,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         if not self.is_staff:
             Apply = apps.get_model('apply', 'Apply')
             applications = Apply.objects.filter(
-                author=self, course=course_id).count()
+                author=self, course__id=course_id).count()
             if applications > 0:
                 return True
         return False

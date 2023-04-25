@@ -5,7 +5,7 @@ from users.models import CustomUser as User
 
 class Apply(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
-    course = models.OneToOneField(
+    course = models.ForeignKey(
         'add_course.Course', on_delete=models.CASCADE, default=None)
     additional_information = models.TextField(blank=True, null=True)
 

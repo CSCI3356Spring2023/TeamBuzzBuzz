@@ -30,8 +30,14 @@ class Course(models.Model):
     supplemental_question_3 = models.CharField(
         max_length=100, default=None, blank=True)
 
+    current_tas = models.ManyToManyField(
+        User, related_name='current_tas', blank=True)
+
     def __str__(self):
         return self.course_title
 
     def get_absolute_url(self):
         return reverse('home')
+
+    def at_capacity(self):
+        return self.current_tas.count() >= int(self.ta_required)

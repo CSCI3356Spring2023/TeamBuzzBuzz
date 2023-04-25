@@ -34,16 +34,25 @@ class ApplyView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixin, Cr
     # context_object_name = 'course'
 
     def form_valid(self, form):
-        if self.request.user.has_already_applied(self.kwargs['app_id']):
+        user = self.request.user
+        course_id = self.kwargs['app_id']
+        course = get_object_or_404(Course, id=course_id)
+
+        has_already_applied = user.has_already_applied(course_id)
+        print(
+            f"User {user} applying for course {course_id}: has_already_applied = {has_already_applied}")
+
+        if has_already_applied:
             form.add_error(None, "You have already applied for this course")
             return super().form_invalid(form)
-        if not self.request.user.can_apply():
+
+        if not user.can_apply():
             form.add_error(
                 None, "You have already reached the maximum number of applications (5)")
             return super().form_invalid(form)
-        form.instance.author = self.request.user
-        form.instance.course = get_object_or_404(
-            Course, id=self.kwargs['app_id'])
+
+        form.instance.author = user
+        form.instance.course = course
         return super().form_valid(form)
 
     def test_func(self):

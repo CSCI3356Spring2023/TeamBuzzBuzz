@@ -7,6 +7,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import ObjectDoesNotExist
 from .models import Offer
+from django.contrib import messages
 
 
 # Create your views here.
@@ -59,13 +60,27 @@ class OfferListStudentView(LoginRequiredMixin, ListView):
     def acceptOffer(request, **kwargs):
         key = kwargs.get('pk')
         offer = Offer.objects.get(id=key)
-        offer.status = True
-        offer.save()
-        return redirect('student_offers', pk = request.user.id)
+        if not offer.course.at_capacity():
+            offer.status = True
+            offer.course.current_tas.add(offer.recipient)
+            offer.course.save()
+            offer.save()
+            messages.success(request, "Offer accepted")
+        else:
+            messages.warning(request, "Course at capacity")
+        return redirect('student_offers', pk=request.user.id)
 
     def rejectOffer(request, **kwargs):
         key = kwargs.get('pk')
         offer = Offer.objects.get(id=key)
         offer.status = False
         offer.save()
-        return redirect('student_offers', pk = request.user.id)
+        messages.success(request, "Offer rejected")
+        return redirect('student_offers', pk=request.user.id)
+
+
+# messages.success(request, "Offer accepted")
+# messages.warning(request, "Course at capacity")
+# messages.error(request, "Offer rejected")
+# messages.info(request, "Offer sent")
+# messages.debug(request, "Offer deleted")
