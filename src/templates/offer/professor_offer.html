@@ -14,9 +14,9 @@
         <tr class="">
             <td>{{offer.recipient.first_name}}{{offer.recipient.last_name}}</td>
             <td>{{offer.course.course_title}}</td>
-            {%if offer.is_accepted and not offer.is_rejected %}
+            {%if offer.status == True%}
                 <td>Accepted</td>
-            {%elif offer.is_rejected %}
+            {%elif offer.status == False %}
                 <td>Declined</td>
             {%else%}
                 <td>Pending</td>

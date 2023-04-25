@@ -59,13 +59,13 @@ class OfferListStudentView(LoginRequiredMixin, ListView):
     def acceptOffer(request, **kwargs):
         key = kwargs.get('pk')
         offer = Offer.objects.get(id=key)
-        offer.is_accepted = True
+        offer.status = True
         offer.save()
         return redirect('student_offers', pk = request.user.id)
 
     def rejectOffer(request, **kwargs):
         key = kwargs.get('pk')
         offer = Offer.objects.get(id=key)
-        offer.is_rejected = True
+        offer.status = False
         offer.save()
         return redirect('student_offers', pk = request.user.id)
