@@ -8,11 +8,23 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import ObjectDoesNotExist
 
 
+class CourseDetailView(LoginRequiredMixin, DetailView):
+    model = Course
+    template_name = 'course_list/course_detail.html'
+    context_object_name = 'course'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['course'] = Course.objects.get(pk=self.kwargs['pk'])
+        return context
+
+
 class CourseListView(LoginRequiredMixin, ListView):
     model = Course
     template_name = 'course_list/course_list.html'
     ordering = ['course_title']
     context_object_name = 'course_data'
+
 
 class ProfessorCoursesView(LoginRequiredMixin, ListView):
     model = Course
@@ -33,7 +45,6 @@ class ProfessorCoursesView(LoginRequiredMixin, ListView):
             print("Exception:", e)
             return Course.objects.none()
 
-
     # def get_queryset(self, *args, **kwargs):
     #     first, last = self.kwargs['name'].split("_")
     #     print("Name:", self.kwargs['name'], "First:", first, "Last:", last)
@@ -47,12 +58,10 @@ class ProfessorCoursesView(LoginRequiredMixin, ListView):
     #         print("Exception:", e)
     #         return Course.objects.none()
 
-    def get_context_data(self, **kwargs): 
+    def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['filtered'] = True
         return context
-    
-    
 
 
 # @login_required
@@ -65,6 +74,3 @@ class ProfessorCoursesView(LoginRequiredMixin, ListView):
 #     }
 
 #     return render(request, 'course_list/course_list.html', context)
-
-
-

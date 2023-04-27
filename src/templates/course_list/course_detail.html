@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-12">
+      <h1 class="display-4">
+        <strong>{{ course }}</strong> Details
+      </h1>
+        <hr>
+        <p><strong>Discussion Required: </strong> {{ course.discussion}}</p>
+        <p><strong>Number of TAs Needed: </strong> {{ course.ta_required }}</p>
+        <p><strong>Course Description: </strong> {{ course.description }}</p>
+        {% if user == course.author %}
+        <p><strong>Current Confirmed TAs ({{course.current_tas.all.count}}): </strong></p>
+        {% for ta in course.current_tas.all %}
+        <p>- <strong>Name: </strong>{{ ta.first_name }}  {{ ta.last_name }}, <strong>Email: </strong> {{ ta }}</p>
+        {% endfor %}
+        {% endif %}
+    </div>
+  </div>
+  <div class="row">
+    <div class="ml-3">
+      <a href="{% url 'course_list' %}" class="btn btn-primary">Back</a>
+    </div>
+    {% if user.is_authenticated and not user.is_staff %}
+    <div class="ml-1">
+      <a href="{% url 'apply' course.id %}" class="btn btn-success">Apply</a>
+    </div>
+    {% endif %}
+  </div> 
+</div>
+{% endblock %}
