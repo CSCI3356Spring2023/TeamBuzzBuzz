@@ -128,7 +128,7 @@ class ApplicationsListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
         application_id = kwargs.get('app_id', 0)
         recipient_application = Apply.objects.get(id=application_id)
         if recipient_application.course.current_tas.count() >= int(recipient_application.course.ta_required):
-            messages.warning(
+            messages.error(
                 request, f"You have reached the maximum number of TAs for this course ({recipient_application.course.ta_required})")
             return redirect('professor_applications')
         else:

@@ -62,10 +62,10 @@ class OfferListStudentView(LoginRequiredMixin, ListView):
         offer = Offer.objects.get(id=key)
 
         if offer.course.at_capacity():
-            messages.warning(
+            messages.error(
                 request, f"Course is already at capacity ({offer.course.ta_required})")
         elif request.user.course_working_for:
-            messages.warning(
+            messages.error(
                 request, f"You are already working for a course ({request.user.course_working_for})")
         else:
             offer.status = True
