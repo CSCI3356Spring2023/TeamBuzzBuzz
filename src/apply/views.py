@@ -131,10 +131,16 @@ class ApplicationsListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
             messages.error(
                 request, f"You have reached the maximum number of TAs for this course ({recipient_application.course.ta_required})")
             return redirect('professor_applications')
+        elif Offer.objects.filter(recipient=recipient_application.author, course=recipient_application.course):
+            messages.error(
+                request, f"{recipient_application.author.first_name} {recipient_application.author.last_name} has already been offered for this course")
+            return redirect('professor_applications')
         else:
             offer = Offer(sender=sender, recipient=recipient_application.author,
                           course=recipient_application.course)
             offer.save()
+            messages.success(
+                request, f"Offer sent to {recipient_application.author.first_name} {recipient_application.author.last_name} successfully. An email has been sent to the student.")
         return redirect('professor_applications')
 
 
