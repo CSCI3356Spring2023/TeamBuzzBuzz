@@ -135,6 +135,10 @@ class ApplicationsListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
             messages.error(
                 request, f"{recipient_application.author.first_name} {recipient_application.author.last_name} has already been offered for this course")
             return redirect('professor_applications')
+        elif recipient_application.author.course_working_for:
+            messages.error(
+                request, f"{recipient_application.author.first_name} {recipient_application.author.last_name} is already a TA for another course {recipient_application.author.course_working_for}")
+            return redirect('professor_applications')
         else:
             offer = Offer(sender=sender, recipient=recipient_application.author,
                           course=recipient_application.course)
