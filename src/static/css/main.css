@@ -39,3 +39,18 @@ ul {
   border-color: #f5c6cb;
 } */
 
+.accepted {
+  color: #155724;  
+}
+
+.declined {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+
+.pending {
+  color: #856404;
+  background-color: #fff3cd;
+  border-color: #ffeeba;
+}

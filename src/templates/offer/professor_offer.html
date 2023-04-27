@@ -12,14 +12,14 @@
     <tbody class="table-hover">
         {% for offer in offer_list%}
         <tr class="">
-            <td>{{offer.recipient.first_name}}{{offer.recipient.last_name}}</td>
-            <td>{{offer.course.course_title}}</td>
-            {%if offer.status == True%}
-                <td>Accepted</td>
-            {%elif offer.status == False %}
-                <td>Declined</td>
-            {%else%}
-                <td>Pending</td>
+            <td>{{ offer.recipient.first_name }} {{offer.recipient.last_name}}</td>
+            <td>{{ offer.course.course_title }}</td>
+            {% if offer.status == True%}
+                <td class="accepted"><strong class="accepted" style="color: green;">Accepted</strong></td>
+            {% elif offer.status == False %}
+                <td class="rejected"><strong class="rejected" style="color: crimson;">Rejected</strong></td>
+            {% else %}
+                <td class="pending"><strong class="pending" style="color: orange;">Pending</strong></td>
             {%endif%}
         </tr>
         {%endfor %}

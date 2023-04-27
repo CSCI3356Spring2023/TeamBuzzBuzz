@@ -154,7 +154,7 @@ class StudentApplicationsListView(LoginRequiredMixin, UserPassesTestMixin, ListV
         return applications
 
 
-class ApplicationDeleteView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixin, ListView):
+class ApplicationDeleteView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Apply
     template_name = 'apply/application_confirm_delete.html'
     success_url = '/'

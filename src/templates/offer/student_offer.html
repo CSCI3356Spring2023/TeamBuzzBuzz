@@ -12,16 +12,16 @@
     <tbody class="table-hover">
         {% for offer in offer_list%}
         <tr class="">
-            <td>{{offer.sender.first_name}}{{offer.sender.last_name}}</td>
+            <td>{{offer.sender.first_name}} {{offer.sender.last_name}}</td>
             <td>{{offer.course.course_title}}</td>
             <td>
                 {% if offer.status == True%}
-                    <p>Acceptance Sent</p>
+                    <p><strong>Acceptance Sent</strong></p>
                 {% elif offer.status == False%}
-                    <p>Rejection Sent</p>
+                    <p><strong>Rejection Sent</strong></p>
                 {% else%}
-                    <a href="{% url 'offer_accept' offer.id%}"> Accept </a>
-                    <a href="{% url 'offer_reject' offer.id%}"> Decline </a>
+                    <a href="{% url 'offer_accept' offer.id%}"> <strong style="color: green;">Accept</strong> </a>
+                    <a href="{% url 'offer_reject' offer.id%}"> <strong style="color: crimson;">Reject</strong> </a>
                 {%endif %}
             </td>
         </tr>
