@@ -11,6 +11,7 @@ from django import forms
 
 from django.core.mail import send_mail
 from django.urls import reverse
+from django.contrib import messages
 
 
 class ApplyForm(ModelForm):
@@ -123,20 +124,17 @@ class ApplicationsListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
         pass
 
     def send_offer_email(request, **kwargs):
-        # send_mail(
-        #     'TA Offer Notice From {} {}'.format(request.user.first_name, request.user.last_name),
-        #     'Here is the message.',
-        #     'tasystem2023@gmail.com',
-        #     ['kohke@bc.edu'],
-        #     fail_silently=False,
-        # )
         sender = request.user
         application_id = kwargs.get('app_id', 0)
-        print("application_id: ", application_id)
         recipient_application = Apply.objects.get(id=application_id)
-        offer = Offer(sender=sender, recipient=recipient_application.author,
-                      course=recipient_application.course)
-        offer.save()
+        if recipient_application.course.current_tas.count() >= int(recipient_application.course.ta_required):
+            messages.warning(
+                request, f"You have reached the maximum number of TAs for this course ({recipient_application.course.ta_required})")
+            return redirect('professor_applications')
+        else:
+            offer = Offer(sender=sender, recipient=recipient_application.author,
+                          course=recipient_application.course)
+            offer.save()
         return redirect('professor_applications')
 
 
