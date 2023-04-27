@@ -60,14 +60,22 @@ class OfferListStudentView(LoginRequiredMixin, ListView):
     def acceptOffer(request, **kwargs):
         key = kwargs.get('pk')
         offer = Offer.objects.get(id=key)
-        if not offer.course.at_capacity():
+
+        if offer.course.at_capacity():
+            messages.warning(
+                request, f"Course is already at capacity ({offer.course.ta_required})")
+        elif request.user.course_working_for:
+            messages.warning(
+                request, f"You are already working for a course ({request.user.course_working_for})")
+        else:
             offer.status = True
             offer.course.current_tas.add(offer.recipient)
             offer.course.save()
             offer.save()
+            request.user.course_working_for = offer.course
+            request.user.save()
             messages.success(request, "Offer accepted")
-        else:
-            messages.warning(request, "Course at capacity")
+
         return redirect('student_offers', pk=request.user.id)
 
     def rejectOffer(request, **kwargs):
