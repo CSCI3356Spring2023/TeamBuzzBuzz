@@ -31,6 +31,22 @@ class CourseCreateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMi
 
     def test_func(self):
         return self.request.user.is_staff
+    
+
+class CourseUpdateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Course
+    template_name = 'add_course/edit_course.html'
+    fields = ['course_title', 'discussion', 'ta_required', 'description',
+              'supplemental_question_1', 'supplemental_question_2', 'supplemental_question_3']
+    success_url = '/'
+    success_message = "Course updated successfully"
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+    def test_func(self, *args, **kwargs):
+        return self.request.user.is_superuser or self.request.user == self.get_object().author
 
 
 # def add_course_view(request, *args, **kwargs):

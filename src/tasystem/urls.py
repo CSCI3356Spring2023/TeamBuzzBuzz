@@ -11,7 +11,7 @@ from users.views import profile as profile_view
 # use this if you want different landing pages per user type
 # from landing_page.views import student_view, professor_view, admin_view
 from landing_page.views import landing_view
-from add_course.views import CourseCreateView
+from add_course.views import CourseCreateView, CourseUpdateView
 from add_oldcourse.views import OldCourseCreateView
 from show_oldcourse.views import ProfessorOldCoursesView, NormalCourseListView
 from student_oldcourse.views import StudentOldCoursesView
@@ -30,6 +30,7 @@ urlpatterns = [
 
 
     path('add_course/', CourseCreateView.as_view(), name='add_course'),
+     path('edit_course/<int:pk>/', CourseUpdateView.as_view(), name='edit_course'),
     path('apply/<int:app_id>/', ApplyView.as_view(), name='apply'),
     path('course_list/', CourseListView.as_view(), name='course_list'),
     path('course_list/<int:pk>/', ProfessorCoursesView.as_view(),

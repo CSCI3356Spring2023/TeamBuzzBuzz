@@ -30,8 +30,7 @@
       <td>{{ course.discussion}}</td>
       <td>{{ course.ta_required }}</td>
       <td>
-        <a href="{% url 'course_detail' course.id %}"> View Course
-        </a>
+        <a href="{% url 'course_detail' course.id %}"> View Course </a>
       </td>
       <td>
         <a href="{% url 'professor_courses' course.author.id %}">
@@ -39,7 +38,9 @@
         </a>
       </td>
       {% if not user.is_staff %}
-      <th><a href="{% url 'apply' course.id %}"> Apply </a></th>
+      <td><a href="{% url 'apply' course.id %}"> Apply </a></td>
+      {% elif user.is_superuser or user == course.author %}
+      <td><a href="{% url 'edit_course' course.id %}"> Edit </a></td>
       {% endif %}
     </tr>
     {% endfor %}
