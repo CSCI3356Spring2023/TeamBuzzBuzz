@@ -25,6 +25,12 @@ class CourseListView(LoginRequiredMixin, ListView):
     ordering = ['course_title']
     context_object_name = 'course_data'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        for course in context['course_data']:
+            course.ta_required = int(course.ta_required)
+        return context
+
 
 class ProfessorCoursesView(LoginRequiredMixin, ListView):
     model = Course

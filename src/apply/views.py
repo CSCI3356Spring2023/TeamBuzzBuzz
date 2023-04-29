@@ -34,7 +34,7 @@ class ApplyView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixin, Cr
     success_message = "Application submitted successfully"
     # context_object_name = 'course'
 
-    def form_valid(self, form):
+    def form_valid(self, form, **kwargs):
         user = self.request.user
         course_id = self.kwargs['app_id']
         course = get_object_or_404(Course, id=course_id)
@@ -57,7 +57,8 @@ class ApplyView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixin, Cr
         return super().form_valid(form)
 
     def test_func(self):
-        return not self.request.user.is_staff
+        course = Course.objects.get(id=self.kwargs['app_id'])
+        return self.request.user.is_superuser or (not self.request.user.is_staff and course.current_tas.count() < int(course.ta_required))
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
