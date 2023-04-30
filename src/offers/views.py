@@ -74,6 +74,7 @@ class OfferListStudentView(LoginRequiredMixin, ListView):
         else:
             offer.status = True
             offer.course.current_tas.add(offer.recipient)
+            offer.course.num_positions_filled +=1
             offer.course.save()
             offer.save()
             request.user.course_working_for = offer.course

@@ -8,7 +8,7 @@
       </h1>
         <hr>
         <p><strong>Discussion Required: </strong> {{ course.discussion}}</p>
-        <p><strong>Number of TAs Needed: </strong> {{ course.ta_required }}</p>
+        <p><strong>Number of Current TAs: </strong> {{ course.num_positions_filled }} out of {{ course.ta_required }}</p>
         <p><strong>Course Description: </strong> {{ course.description }}</p>
         {% if user == course.author %}
         <p><strong>Current Confirmed TAs ({{course.current_tas.all.count}}): </strong></p>
