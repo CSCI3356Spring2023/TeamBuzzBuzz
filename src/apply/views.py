@@ -8,6 +8,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.forms import ModelForm
 from django import forms
+from django.db.models import Q
 
 from django.core.mail import send_mail
 from django.urls import reverse
@@ -99,13 +100,13 @@ class ApplicationsListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
 
     def get_queryset(self):
         if self.request.user.is_superuser:
+            # will show all applications regardless of whether applicant has accepted a position already
             applications = Apply.objects.all()
-            print(applications)
             return applications
         else:
             applications = Apply.objects.filter(
-                course__author=self.request.user)
-            print(applications)
+                Q(course__author=self.request.user) &
+                Q(author__course_working_for=None))
             return applications
 
     # bug : create_offer can't be found issue
