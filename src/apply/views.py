@@ -11,6 +11,7 @@ from django import forms
 from django.db.models import Q
 
 from django.core.mail import send_mail
+from django.conf import settings
 from django.urls import reverse
 from django.contrib import messages
 
@@ -107,6 +108,8 @@ class ApplicationsListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
             applications = Apply.objects.filter(
                 Q(course__author=self.request.user) &
                 Q(author__course_working_for=None))
+            # make sure to make accessing url forbidden if applicant has already accepted
+            # a pos because I have not done that yet but should be easy
             return applications
 
     # bug : create_offer can't be found issue
@@ -147,6 +150,18 @@ class ApplicationsListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
             offer.save()
             messages.success(
                 request, f"Offer sent to {recipient_application.author.first_name} {recipient_application.author.last_name} successfully. An email has been sent to the student.")
+            
+
+            send_mail(
+                f'Offer for {recipient_application.course.course_title}',
+                f'You have been offered a position as a TA for {recipient_application.course.course_title}. Please log in to your account to accept or reject the offer.',
+                settings.EMAIL_HOST_USER,
+                [recipient_application.author.email],
+                fail_silently=False,
+            )
+
+
+        
         return redirect('professor_applications')
 
 
