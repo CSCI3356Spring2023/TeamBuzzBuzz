@@ -53,6 +53,11 @@ class ApplyView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixin, Cr
             form.add_error(
                 None, "You have already reached the maximum number of applications (5)")
             return super().form_invalid(form)
+        
+        if user.course_working_for:
+            form.add_error(
+                None, f"You are already a TA for another course ({user.course_working_for})")
+            return super().form_invalid(form)
 
         form.instance.author = user
         form.instance.course = course
@@ -150,8 +155,6 @@ class ApplicationsListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
             offer.save()
             messages.success(
                 request, f"Offer sent to {recipient_application.author.first_name} {recipient_application.author.last_name} successfully. An email has been sent to the student.")
-            
-
             send_mail(
                 f'Offer for {recipient_application.course.course_title}',
                 f'You have been offered a position as a TA for {recipient_application.course.course_title}. Please log in to your account to accept or reject the offer.',
@@ -159,9 +162,6 @@ class ApplicationsListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
                 [recipient_application.author.email],
                 fail_silently=False,
             )
-
-
-        
         return redirect('professor_applications')
 
 
