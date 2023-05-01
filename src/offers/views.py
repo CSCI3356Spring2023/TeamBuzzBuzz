@@ -8,6 +8,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import ObjectDoesNotExist
 from .models import Offer
 from django.contrib import messages
+from apply.models import Apply
+
+from django.core.mail import send_mail
+from django.conf import settings
 
 
 # Create your views here.
@@ -70,11 +74,25 @@ class OfferListStudentView(LoginRequiredMixin, ListView):
         else:
             offer.status = True
             offer.course.current_tas.add(offer.recipient)
+            offer.course.num_positions_filled +=1
             offer.course.save()
             offer.save()
             request.user.course_working_for = offer.course
             request.user.save()
             messages.success(request, "Offer accepted")
+
+            # check if course is now full and send email to all remainging applicants
+            if offer.course.at_capacity():
+                recipients = [recipient_application.author for recipient_application in Apply.objects.filter(
+                        course=offer.course)]
+                recipients = [r for r in recipients if r not in offer.course.current_tas.all()]
+                send_mail(
+                    f'{offer.course.course_title} is now full',
+                    f'Unfortunately, {offer.course.course_title} is now full. We appreciate your interest in the course and hope you apply again next semester.',
+                    settings.EMAIL_HOST_USER,
+                    recipients,
+                    fail_silently=False,
+                )
 
         return redirect('student_offers', pk=request.user.id)
 

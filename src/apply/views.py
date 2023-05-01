@@ -8,8 +8,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.forms import ModelForm
 from django import forms
+from django.db.models import Q
 
 from django.core.mail import send_mail
+from django.conf import settings
 from django.urls import reverse
 from django.contrib import messages
 
@@ -34,7 +36,7 @@ class ApplyView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixin, Cr
     success_message = "Application submitted successfully"
     # context_object_name = 'course'
 
-    def form_valid(self, form):
+    def form_valid(self, form, **kwargs):
         user = self.request.user
         course_id = self.kwargs['app_id']
         course = get_object_or_404(Course, id=course_id)
@@ -51,13 +53,19 @@ class ApplyView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixin, Cr
             form.add_error(
                 None, "You have already reached the maximum number of applications (5)")
             return super().form_invalid(form)
+        
+        if user.course_working_for:
+            form.add_error(
+                None, f"You are already a TA for another course ({user.course_working_for})")
+            return super().form_invalid(form)
 
         form.instance.author = user
         form.instance.course = course
         return super().form_valid(form)
 
     def test_func(self):
-        return not self.request.user.is_staff
+        course = Course.objects.get(id=self.kwargs['app_id'])
+        return self.request.user.is_superuser or (not self.request.user.is_staff and course.current_tas.count() < int(course.ta_required))
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -98,13 +106,15 @@ class ApplicationsListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
 
     def get_queryset(self):
         if self.request.user.is_superuser:
+            # will show all applications regardless of whether applicant has accepted a position already
             applications = Apply.objects.all()
-            print(applications)
             return applications
         else:
             applications = Apply.objects.filter(
-                course__author=self.request.user)
-            print(applications)
+                Q(course__author=self.request.user) &
+                Q(author__course_working_for=None))
+            # make sure to make accessing url forbidden if applicant has already accepted
+            # a pos because I have not done that yet but should be easy
             return applications
 
     # bug : create_offer can't be found issue
@@ -146,6 +156,13 @@ class ApplicationsListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
             offer.save()
             messages.success(
                 request, f"Offer sent to {recipient_application.author.first_name} {recipient_application.author.last_name} successfully. An email has been sent to the student.")
+            send_mail(
+                f'Offer for {recipient_application.course.course_title}',
+                f'You have been offered a position as a TA for {recipient_application.course.course_title}. Please log in to your account to accept or reject the offer.',
+                settings.EMAIL_HOST_USER,
+                [recipient_application.author.email],
+                fail_silently=False,
+            )
         return redirect('professor_applications')
 
 

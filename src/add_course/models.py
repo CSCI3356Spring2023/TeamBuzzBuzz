@@ -19,6 +19,7 @@ class Course(models.Model):
     discussion = models.CharField(max_length=100, choices=DISCUSSION)
     ta_required = models.CharField(max_length=100, choices=OPTIONS)
     description = models.CharField(max_length=100)
+    num_positions_filled = models.IntegerField(default=0)
 
     author = models.ForeignKey(
         User, on_delete=models.CASCADE, default=None, related_name='added_courses')
