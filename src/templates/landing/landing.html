@@ -9,6 +9,8 @@
 <p>Professor</p>
 {% elif not user.is_staff %}
 <p>Student</p>
+<p>Relationship: {{ user.relationship }}</p>
+<p>Eagle ID: {{ user.eagleID }}</p>
 <p>GPA: {{ user.gpa }}</p>
 <p>Year: {{ user.year }}</p>
 <p>Course TA'ing for: {{ user.course_working_for }} </p>
