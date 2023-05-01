@@ -2,7 +2,7 @@
 {% block content %} 
 {% if filtered %}
 <h1>
-  {{ course_data.0.author.first_name }} {{ course_data.0.author.last_name }}'s
+  {{ user.first_name }} {{ user.last_name }}'s
   Courses
 </h1>
 {% else %}
@@ -17,7 +17,7 @@
     <tr>
       <th>Course Title</th>
       <th>Discussion</th>
-      <th>TA Required</th>
+      <th>Filled Positions</th>
       <th>Course View</th>
       <th>Professor</th>
       {% if not user.is_staff %}
@@ -30,7 +30,7 @@
     <tr class="" data-href="{% url 'apply' course.id %}">
       <td>{{ course.course_title }}</td>
       <td>{{ course.discussion}}</td>
-      <td>{{ course.ta_required }}</td>
+      <td>{{ course.num_positions_filled }} / {{ course.ta_required }}</td>
       <td>
         <a href="{% url 'course_detail' course.id %}"> View Course </a>
       </td>
