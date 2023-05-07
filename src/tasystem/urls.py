@@ -17,7 +17,7 @@ from show_oldcourse.views import ProfessorOldCoursesView, NormalCourseListView
 from student_oldcourse.views import StudentOldCoursesView
 from apply.views import (ApplyView, ApplicationsListView,
                          StudentApplicationsListView, ApplicationDeleteView, ApplicationReviewView)
-from course_list.views import CourseListView, ProfessorCoursesView, CourseDetailView
+from course_list.views import CourseListView, ProfessorCoursesView, CourseDetailView, SuggestedCoursesView
 from offers.views import OfferListStudentView, OfferListView, OfferListProfessorView
 
 # Can't render add_course if the view is from pages for some reason
@@ -33,6 +33,7 @@ urlpatterns = [
      path('edit_course/<int:pk>/', CourseUpdateView.as_view(), name='edit_course'),
     path('apply/<int:app_id>/', ApplyView.as_view(), name='apply'),
     path('course_list/', CourseListView.as_view(), name='course_list'),
+    path('suggested_course_list/<int:pk>/', SuggestedCoursesView.as_view(), name='suggested_course_list'),
     path('course_list/<int:pk>/', ProfessorCoursesView.as_view(),
          name='professor_courses'),
     path('course_detail/<int:pk>/', CourseDetailView.as_view(),

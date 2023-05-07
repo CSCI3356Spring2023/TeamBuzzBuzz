@@ -3,20 +3,24 @@ from django.db import models
 from django.contrib.auth.models import Group, Permission
 from django.apps import apps
 
-
+RELATIONSHIP_CHOICES = (
+    ("BS", "Major BS"),
+    ("BA", "Major BA"),
+    ("MIN", "Minor"),
+)
 class CustomUserManager(BaseUserManager):
 
-    def _create_user(self, email, first_name, last_name, gpa, year, password, **extra_fields):
+    def _create_user(self, email, first_name, last_name, password, **extra_fields):
         if not email:
             raise ValueError('The Email must be set')
         email = self.normalize_email(email)
         user = self.model(email=email, first_name=first_name,
-                          last_name=last_name, gpa=gpa, year=year, **extra_fields)
+                          last_name=last_name, **extra_fields)
         user.set_password(password)
         user.save()
         return user
 
-    def create_superuser(self, email, first_name, last_name, gpa, year, password=None, **extra_fields):
+    def create_superuser(self, email, first_name, last_name, password=None, **extra_fields):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
 
@@ -25,17 +29,20 @@ class CustomUserManager(BaseUserManager):
         if extra_fields.get('is_superuser') is not True:
             raise ValueError('Superuser must have is_superuser=True.')
 
-        return self._create_user(email, first_name, last_name, gpa, year, password, **extra_fields)
+        return self._create_user(email, first_name, last_name, password, **extra_fields)
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
-    gpa = models.DecimalField(max_digits=3, decimal_places=2)
+    gpa = models.DecimalField(max_digits=3, decimal_places=2, default = 0.0)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     year = models.PositiveIntegerField(default=2023)
+    eagle_ID = models.PositiveIntegerField(default=00000000)
+    relationship = models.CharField(max_length=20, choices = RELATIONSHIP_CHOICES, default = 'BS',)
+
 
     course_working_for = models.ForeignKey(
         'add_course.Course', on_delete=models.CASCADE, default=None, null=True, blank=True)
@@ -63,7 +70,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     )
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name', 'last_name', 'gpa', 'year', 'is_staff']
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'is_staff']
 
     def can_apply(self):
         if not self.is_staff:

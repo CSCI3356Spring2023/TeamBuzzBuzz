@@ -156,11 +156,18 @@ class ApplicationsListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
             offer.save()
             messages.success(
                 request, f"Offer sent to {recipient_application.author.first_name} {recipient_application.author.last_name} successfully. An email has been sent to the student.")
+            # send_mail(
+            #     f'Offer for {recipient_application.course.course_title}',
+            #     f'You have been offered a position as a TA for {recipient_application.course.course_title}. Please log in to your account to accept or reject the offer.',
+            #     settings.EMAIL_HOST_USER,
+            #     [recipient_application.author.email],
+            #     fail_silently=False,
+            # )
             send_mail(
                 f'Offer for {recipient_application.course.course_title}',
                 f'You have been offered a position as a TA for {recipient_application.course.course_title}. Please log in to your account to accept or reject the offer.',
                 settings.EMAIL_HOST_USER,
-                [recipient_application.author.email],
+                ['kohke@bc.edu'],
                 fail_silently=False,
             )
         return redirect('professor_applications')
