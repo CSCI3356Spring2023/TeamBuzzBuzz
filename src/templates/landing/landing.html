@@ -1,19 +1,30 @@
-{% extends 'base.html' %} {% block content %}
-{% if user.is_authenticated%}
-<h1>Welcome {{ user.first_name }} {{ user.last_name }}</h1>
-<p>Is Active: {{ user.is_active }}</p>
-<p>Email: {{ user.email }}</p>
-{% if user.is_superuser %}
-<p>Admin</p>
-{% elif user.is_staff %}
-<p>Professor</p>
-{% elif not user.is_staff %}
-<p>Student</p>
-<p>Relationship: {{ user.relationship }}</p>
-<p>Eagle ID: {{ user.eagleID }}</p>
-<p>GPA: {{ user.gpa }}</p>
-<p>Year: {{ user.year }}</p>
-<p>Course TA'ing for: {{ user.course_working_for }} </p>
-{% endif %} {% else %}
-<h2>Please Log In</h2>
-{% endif %} {% endblock %}
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+  {% if user.is_authenticated %}
+  <h1 class="mb-3">Welcome {{ user.first_name }} {{ user.last_name }}</h1>
+  <hr>
+
+  <h5>Your information:</h5>
+  <div class="list-group">
+    <p class="list-group-item">Email: {{ user.email }}</p>
+    {% if user.is_superuser %}
+    <p class="list-group-item">Role: Admin</p>
+    {% elif user.is_staff %}
+    <p class="list-group-item">Role: Professor</p>
+    <p class="list-group-item">Relationship: Professor</p>
+    {% elif not user.is_staff %}
+    <p class="list-group-item">Role: Student</p>
+    <p class="list-group-item">Relationship: {{ user.relationship }}</p>
+    <p class="list-group-item">Eagle ID: {{ user.eagle_ID }}</p>
+    <p class="list-group-item">GPA: {{ user.gpa }}</p>
+    <p class="list-group-item">Year: {{ user.year }}</p>
+    <p class="list-group-item">Course TA'ing for: {{ user.course_working_for }} </p>
+    {% endif %}
+  </div>
+  {% else %}
+  <h2 class="mb-3">Please Log In</h2>
+  {% endif %}
+</div>
+{% endblock %}

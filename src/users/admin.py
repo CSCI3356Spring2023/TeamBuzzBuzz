@@ -14,7 +14,7 @@ class CustomUserAdmin(UserAdmin):
             'fields': ('is_active', 'is_staff'),
         }),
         (_('Other information'), {
-         'fields': ('gpa', 'year', 'course_working_for')}),
+         'fields': ('gpa', 'year', 'course_working_for', 'relationship', 'eagle_ID')}),
     )
     add_fieldsets = (
         (None, {
