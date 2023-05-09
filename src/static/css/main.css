@@ -13,6 +13,11 @@ a h6 {
   color: #444444;
 }
 
+img {
+  width: 25px;
+  margin-right: 5px;
+}
+
 ul {
   margin: 0;
 }

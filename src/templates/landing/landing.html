@@ -4,6 +4,18 @@
 <div class="container mt-5">
   {% if user.is_authenticated %}
   <h1 class="mb-3">Welcome {{ user.first_name }} {{ user.last_name }}</h1>
+
+  {% if user.is_staff %}
+  <!-- <p>You are currently a professor</p> -->
+  {% elif not user.course_working_for and not user.is_staff %}
+  <p>Start applying <a href="{% url 'course_list' %}">here</a></p>
+  {% else %}
+  <p>You are currently working for {{ user.course_working_for }}</p>
+
+  {% endif %}
+
+  
+
   <hr>
 
   <h5>Your information:</h5>

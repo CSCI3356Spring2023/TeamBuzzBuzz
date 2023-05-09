@@ -7,10 +7,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
-# Admin panel:
-# username: superuser
-# password: admin
-
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -158,9 +154,3 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'tasystem2023@gmail.com'
 EMAIL_HOST_PASSWORD = 'eymwzvyzsrajryjo'
-
-
-
-
-
-

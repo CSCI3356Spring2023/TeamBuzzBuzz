@@ -20,6 +20,9 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
 
+    <!-- favicon  -->
+    <link rel="icon" href="{% static 'assets/favicon.ico' %}" />
+
     {% if title %}
     <title>Ta System - {{ title }}</title>
     {% else %}
@@ -30,7 +33,7 @@
     <header class="site-header">
       <nav class="navbar navbar-expand-md navbar-dark bg-blue fixed-top">
         <div class="container">
-          <a class="navbar-brand mr-4" href="{% url 'home' %}">TA Buzz</a>
+          <a class="navbar-brand mr-4" href="{% url 'home' %}"><img src="{% static 'assets/b1.png' %}">TA Buzz</a>
           <button
             class="navbar-toggler"
             type="button"
