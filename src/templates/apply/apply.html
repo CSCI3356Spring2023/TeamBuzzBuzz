@@ -10,9 +10,18 @@
       <hr>
       <h3>Course Information:</h3>
       <br>
-      <p><strong>Discussion Required: </strong> {{ course.discussion}}</p>
-      <p><strong>Number of Current TAs: </strong> {{ course.num_positions_filled }} out of {{ course.ta_required }}</p>
+      <p><strong>Course Number: </strong> {{ course.course_number}}</p>
+      <p><strong>Day(s) and Time: </strong> {{ course.course_day_and_time}}</p>
       <p><strong>Course Description: </strong> {{ course.description }}</p>
+      <p><strong>Discussion Required: </strong> {{ course.discussion}}</p>
+      <p><strong>Number of Office Hours Required: </strong> {{ course.office_hours}}</p>
+      {% if course.homework_graded_in_meetings %}
+        <p><strong>Homework graded in meetings? </strong> Yes</p>
+        {% else %}
+        <p><strong>Homework graded in meetings? </strong> No</p>
+        {% endif %}
+      <p><strong>Number of Current TAs: </strong> {{ course.num_positions_filled }} out of {{ course.ta_required }}</p>
+      <p><strong>Additional Information: </strong> {{ course.additional_info}}</p>
     </div>
   </div>
   <hr>

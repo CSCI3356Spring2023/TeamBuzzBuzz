@@ -16,8 +16,8 @@ from django.forms import inlineformset_factory
 class CourseCreateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Course
     template_name = 'add_course/add_course.html'
-    fields = ['course_title', 'course_number', 'course_section', 'course_day_time', 'discussion', 'ta_required', 'homework_graded_in_meetings', 'description', 
-              'supplemental_question_1', 'supplemental_question_2', 'supplemental_question_3']
+    fields = ['course_title', 'course_number', 'course_section', 'course_day_and_time', 'discussion','office_hours', 'ta_required', 'homework_graded_in_meetings', 'description', 
+              'supplemental_question_1', 'supplemental_question_2', 'supplemental_question_3', 'additional_info']
     success_url = '/'
     success_message = "Course added successfully"
 
@@ -36,8 +36,8 @@ class CourseCreateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMi
 class CourseUpdateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Course
     template_name = 'add_course/edit_course.html'
-    fields = ['course_title', 'discussion', 'ta_required', 'description',
-              'supplemental_question_1', 'supplemental_question_2', 'supplemental_question_3']
+    fields = ['course_title', 'course_number', 'course_section', 'course_day_and_time', 'discussion', 'office_hours', 'ta_required', 'homework_graded_in_meetings', 'description',
+              'supplemental_question_1', 'supplemental_question_2', 'supplemental_question_3', 'additional_info']
     success_url = '/'
     success_message = "Course updated successfully"
 
