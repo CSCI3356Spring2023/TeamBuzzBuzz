@@ -15,6 +15,12 @@ class Course(models.Model):
         ('NO', 'No'),
     ]
     course_title = models.CharField(max_length=100)
+    #new
+    course_number = models.CharField(max_length=100, default=0)
+    course_section = models.IntegerField(default=0)
+    course_date = models. DateTimeField (null=True)
+    homework_graded_in_meetings = models.BooleanField(default=True)
+    #end new
     status = models.BooleanField(default=True)
     email = models.EmailField()
     discussion = models.CharField(max_length=100, choices=DISCUSSION)
