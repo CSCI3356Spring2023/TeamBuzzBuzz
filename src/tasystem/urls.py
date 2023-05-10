@@ -30,12 +30,13 @@ urlpatterns = [
 
 
     path('add_course/', CourseCreateView.as_view(), name='add_course'),
-     path('edit_course/<int:pk>/', CourseUpdateView.as_view(), name='edit_course'),
+    path('edit_course/<int:pk>/', CourseUpdateView.as_view(), name='edit_course'),
     path('apply/<int:app_id>/', ApplyView.as_view(), name='apply'),
     path('course_list/', CourseListView.as_view(), name='course_list'),
     path('suggested_course_list/<int:pk>/', SuggestedCoursesView.as_view(), name='suggested_course_list'),
     path('course_list/<int:pk>/', ProfessorCoursesView.as_view(),
          name='professor_courses'),
+    path('course_list_close_course/<int:pk>/', ProfessorCoursesView.change_course_status,name='change_course_status'),
     path('course_detail/<int:pk>/', CourseDetailView.as_view(),
          name='course_detail'),
     path('professor_applications/', ApplicationsListView.as_view(),

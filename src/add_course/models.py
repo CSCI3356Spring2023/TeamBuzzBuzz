@@ -15,6 +15,7 @@ class Course(models.Model):
         ('NO', 'No'),
     ]
     course_title = models.CharField(max_length=100)
+    status = models.BooleanField(default=True)
     email = models.EmailField()
     discussion = models.CharField(max_length=100, choices=DISCUSSION)
     ta_required = models.CharField(max_length=100, choices=OPTIONS)

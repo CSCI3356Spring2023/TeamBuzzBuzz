@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import ObjectDoesNotExist
+from django.contrib import messages
 
 
 class CourseDetailView(LoginRequiredMixin, DetailView):
@@ -71,6 +72,23 @@ class ProfessorCoursesView(LoginRequiredMixin, ListView):
         except ObjectDoesNotExist as e:
             print("Exception:", e)
             return Course.objects.none()
+        
+    def change_course_status(request, **kwargs):
+        key = kwargs.get('pk')
+        course = Course.objects.get(id=key)
+        
+        # close the course and change status to false
+        course.status = not course.status
+        if course.status == False:
+            messages.warning(request, f'Course has been closed {course.course_title}')
+        else:
+            messages.success(request, f'Course has been opened {course.course_title}')
+            
+        course.save()
+        
+        return redirect('course_list')
+        
+        
 
     # def get_queryset(self, *args, **kwargs):
     #     first, last = self.kwargs['name'].split("_")
