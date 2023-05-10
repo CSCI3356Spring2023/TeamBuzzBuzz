@@ -18,7 +18,12 @@ class Course(models.Model):
     #new
     course_number = models.CharField(max_length=100, default=0)
     course_section = models.IntegerField(default=0)
-    course_date = models. DateTimeField (null=True)
+    course_day_time = models.CharField(max_length=100, default=0)
+    homework_graded_in_meetings = models.BooleanField(default=True)
+    # monday = models.BooleanField(default=True)
+    # tuesday = models.BooleanField(default=True)
+    # wednesday = models.BooleanField(default=True)
+    # thursday = models.BooleanField(default=True)
     homework_graded_in_meetings = models.BooleanField(default=True)
     #end new
     status = models.BooleanField(default=True)

@@ -16,7 +16,7 @@ from django.forms import inlineformset_factory
 class CourseCreateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Course
     template_name = 'add_course/add_course.html'
-    fields = ['course_title', 'course_number', 'course_section', 'course_date', 'discussion', 'ta_required', 'homework_graded_in_meetings', 'description', 
+    fields = ['course_title', 'course_number', 'course_section', 'course_day_time', 'discussion', 'ta_required', 'homework_graded_in_meetings', 'description', 
               'supplemental_question_1', 'supplemental_question_2', 'supplemental_question_3']
     success_url = '/'
     success_message = "Course added successfully"
