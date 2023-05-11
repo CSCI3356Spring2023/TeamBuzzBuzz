@@ -24,7 +24,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 SECRET_KEY = 'cshx$)89tn7z_bfvgf*g+hx*!_3-gwp&q9v5noafry6wldhwsc'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
