@@ -33,7 +33,8 @@ class SuggestedCoursesView(LoginRequiredMixin, ListView):
         try:
             user = CustomUser.objects.get(pk=key)
             print("User:", user)
-            oldcourses = OldCourse.objects.filter(taker=user)#.values('course_title', 'author')
+            # .values('course_title', 'author')
+            oldcourses = OldCourse.objects.filter(taker=user)
             profs = []
             titles = []
             for x in oldcourses:
@@ -43,7 +44,8 @@ class SuggestedCoursesView(LoginRequiredMixin, ListView):
                     titles.append(x.course_title)
             print(profs)
             print(titles)
-            courses = Course.objects.filter(author__in=profs, course_title__in=titles)
+            courses = Course.objects.filter(
+                author__in=profs, course_title__in=titles)
             print("Courses:", courses)
             return courses
         except ObjectDoesNotExist as e:
@@ -82,23 +84,23 @@ class ProfessorCoursesView(LoginRequiredMixin, ListView):
         except ObjectDoesNotExist as e:
             print("Exception:", e)
             return Course.objects.none()
-        
+
     def change_course_status(request, **kwargs):
         key = kwargs.get('pk')
         course = Course.objects.get(id=key)
-        
+
         # close the course and change status to false
         course.status = not course.status
         if course.status == False:
-            messages.warning(request, f'Course has been closed {course.course_title}')
+            messages.warning(
+                request, f'Course has been closed {course.course_title}')
         else:
-            messages.success(request, f'Course has been opened {course.course_title}')
-            
+            messages.success(
+                request, f'Course has been opened {course.course_title}')
+
         course.save()
-        
-        return redirect('course_list')
-        
-        
+
+        return redirect('professor_courses', pk=key)
 
     # def get_queryset(self, *args, **kwargs):
     #     first, last = self.kwargs['name'].split("_")

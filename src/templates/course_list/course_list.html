@@ -57,7 +57,7 @@
             <td>Closed</td>
           {%endif%}
           <td><a href="{% url 'edit_course' course.id %}"> Edit </a></td>
-          {% if course.status == True%}
+          {% if course.status == True %}
             <td><a href="{% url 'change_course_status' course.id %}"> <strong style="color: red"> Close Course </strong> </a></td>
           {%else%}
             <td><a href="{% url 'change_course_status' course.id %}">  <strong style="color: green;"> Open Course </strong> </a></td>
