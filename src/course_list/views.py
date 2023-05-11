@@ -87,7 +87,8 @@ class ProfessorCoursesView(LoginRequiredMixin, ListView):
 
     def change_course_status(request, **kwargs):
         key = kwargs.get('pk')
-        course = Course.objects.get(id=key)
+        user = CustomUser.objects.get(pk=key)
+        course = Course.objects.filter(author=user)
 
         # close the course and change status to false
         course.status = not course.status
