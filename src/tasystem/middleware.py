@@ -9,7 +9,7 @@ class SystemClosedMiddleware:
         self.get_response = get_response
 
     def __call__(self, request):
-        if request.user.is_authenticated and not request.user.is_superuser:
+        if request.user.is_authenticated and not request.user.is_staff:
             system_status = SystemStatus.objects.first()
             if request.path != reverse('logout'):
                 if system_status and not system_status.system_active:
