@@ -1,1 +1,1 @@
-web: cd ./src && python manage.py migrate && gunicorn tasystem.wsgi
+web: cd ./src && python manage.py migrate --run-syncdb && gunicorn tasystem.wsgi
