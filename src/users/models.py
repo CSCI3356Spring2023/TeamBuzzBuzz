@@ -8,6 +8,8 @@ RELATIONSHIP_CHOICES = (
     ("BA", "Major BA"),
     ("MIN", "Minor"),
 )
+
+
 class CustomUserManager(BaseUserManager):
 
     def _create_user(self, email, first_name, last_name, password, **extra_fields):
@@ -36,13 +38,14 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
-    gpa = models.DecimalField(max_digits=3, decimal_places=2, default = 0.0)
+    gpa = models.DecimalField(
+        max_digits=3, decimal_places=2, default=0.0, null=True, blank=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
-    year = models.PositiveIntegerField(default=2023)
+    year = models.PositiveIntegerField(default=2023, null=True, blank=True)
     eagle_ID = models.PositiveIntegerField(default=00000000)
-    relationship = models.CharField(max_length=20, choices = RELATIONSHIP_CHOICES, default = 'BS',)
-
+    relationship = models.CharField(
+        max_length=20, choices=RELATIONSHIP_CHOICES, default='BS',)
 
     course_working_for = models.ForeignKey(
         'add_course.Course', on_delete=models.CASCADE, default=None, null=True, blank=True)

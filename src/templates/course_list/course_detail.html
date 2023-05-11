@@ -39,6 +39,13 @@
       <a href="{% url 'apply' course.id %}" class="btn btn-success">Apply</a>
     </div>
     {% endif %}
+    {% if user.is_authenticated and user.is_staff %}
+    <div class="ml-1">
+      <a href="{% url 'edit_course' course.id %}" class="btn btn-warning">Edit</a>
+      <a href="{% url 'add_discussion' course.id %}" class="btn btn-info">Add Discussion</a>
+      <a href="{% url 'discussion_list' course.id %}" class="btn btn-info">View Discussion Sections</a>
+    </div>
+    {% endif %}  
   </div> 
 </div>
 {% endblock %}

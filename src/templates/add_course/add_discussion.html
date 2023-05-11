@@ -1,0 +1,10 @@
+{% extends 'base.html' %} {% load crispy_forms_tags %} {%block addcourse%}
+<div>
+  <h1>Discussion Creation</h1>
+  <form action="" method="POST" class="mb-5">
+    {% csrf_token %} {{form|crispy}}
+    <input class="btn btn-outline-secondary" type ="button" value="back" onclick="history.back()"/>
+    <input class="btn btn-outline-success" type="submit" value="submit" />
+  </form>
+</div>
+{% endblock %}

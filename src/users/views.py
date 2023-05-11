@@ -8,6 +8,10 @@ from .forms import UserRegisterForm, UserUpdateForm
 def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
+        # form.gpa not required
+        # form.year not required
+
+        
         if form.is_valid():
             form.save()
             email = form.cleaned_data.get('email')

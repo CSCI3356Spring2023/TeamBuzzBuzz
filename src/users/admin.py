@@ -24,4 +24,11 @@ class CustomUserAdmin(UserAdmin):
     )
 
 
+# course_number = models.CharField(max_length=100, default=0)
+# course_section = models.IntegerField(default=0)
+# course_day_and_time = models.CharField(max_length=100, default=0)
+# homework_graded_in_meetings = models.BooleanField(default=True)
+# office_hours = models.IntegerField(default=0)
+# additional_info = models.CharField(max_length=100, default=0)
+
 admin.site.register(CustomUser, CustomUserAdmin)

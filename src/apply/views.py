@@ -141,35 +141,36 @@ class ApplicationsListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
             messages.error(
                 request, f"You have reached the maximum number of TAs for this course ({recipient_application.course.ta_required})")
             return redirect('professor_applications')
-        elif offers := Offer.objects.filter(recipient=recipient_application.author, course=recipient_application.course):
-            print(offers)
+
+        if Offer.objects.filter(recipient=recipient_application.author, course=recipient_application.course):
             messages.error(
                 request, f"{recipient_application.author.first_name} {recipient_application.author.last_name} has already been offered for this course")
             return redirect('professor_applications')
-        elif recipient_application.author.course_working_for:
+
+        if recipient_application.author.course_working_for:
             messages.error(
                 request, f"{recipient_application.author.first_name} {recipient_application.author.last_name} is already a TA for another course {recipient_application.author.course_working_for}")
             return redirect('professor_applications')
-        else:
-            offer = Offer(sender=sender, recipient=recipient_application.author,
-                          course=recipient_application.course)
-            offer.save()
-            messages.success(
-                request, f"Offer sent to {recipient_application.author.first_name} {recipient_application.author.last_name} successfully. An email has been sent to the student.")
-            send_mail(
-                f'Offer for {recipient_application.course.course_title}',
-                f'You have been offered a position as a TA for {recipient_application.course.course_title}. Please log in to your account to accept or reject the offer.',
-                settings.EMAIL_HOST_USER,
-                [recipient_application.author.email],
-                fail_silently=False,
-            )
-            # send_mail(
-            #     f'Offer for {recipient_application.course.course_title}',
-            #     f'You have been offered a position as a TA for {recipient_application.course.course_title}. Please log in to your account to accept or reject the offer.',
-            #     settings.EMAIL_HOST_USER,
-            #     ['kohke@bc.edu'],
-            #     fail_silently=False,
-            # )
+
+        offer = Offer(sender=sender, recipient=recipient_application.author,
+                      course=recipient_application.course)
+        offer.save()
+        messages.success(
+            request, f"Offer sent to {recipient_application.author.first_name} {recipient_application.author.last_name} successfully. An email has been sent to the student.")
+        send_mail(
+            f'Offer for {recipient_application.course.course_title}',
+            f'You have been offered a position as a TA for {recipient_application.course.course_title}. Please log in to your account to accept or reject the offer.',
+            settings.EMAIL_HOST_USER,
+            [recipient_application.author.email],
+            fail_silently=False,
+        )
+        # send_mail(
+        #     f'Offer for {recipient_application.course.course_title}',
+        #     f'You have been offered a position as a TA for {recipient_application.course.course_title}. Please log in to your account to accept or reject the offer.',
+        #     settings.EMAIL_HOST_USER,
+        #     ['kohke@bc.edu'],
+        #     fail_silently=False,
+        # )
         return redirect('professor_applications')
 
 

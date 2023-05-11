@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %} 
+<h2>Discussion sections for {{ course }}</h2>
+
+{% if discussions %}
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Number</th>
+      <th scope="col">Day</th>
+      <th scope="col">Time</th>
+      <th scope="col">TA</th>
+      <th scope="col">Edit</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for discussion in discussions %}
+    <tr>
+      <th scope="row">{{ forloop.counter }}</th>
+      <td>{{ discussion.number }}</td>
+      <td>{{ discussion.day }}</td>
+      <td>{{ discussion.time }}</td>
+      <td>{{ discussion.ta }}</td>
+      <td><a href="{% url 'edit_discussion' discussion.id %}">Edit</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>No discussions have been added yet.</p>
+{% endif %}
+{% endblock %}
