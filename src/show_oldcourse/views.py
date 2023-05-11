@@ -20,6 +20,13 @@ class NormalCourseListView(LoginRequiredMixin, ListView):
         print("course_id: ", course_id)
         course = Course.objects.get(id=course_id)
         studentoldcourse = OldCourse(course_title = course.course_title, year = course.year, semester = course.semester, author = course.author, taker = sender )
+        print(course)
+        print(OldCourse.objects.filter(taker = sender, course_title = course.course_title))
+        print(course not in OldCourse.objects.filter(taker = sender, course_title = course.course_title))
+        for x in OldCourse.objects.filter(taker = sender, course_title = course.course_title):
+            if x.course_title == course.course_title:
+                print('already taken old course')
+                return redirect('show_normaloldcourse')
         studentoldcourse.save()
         return redirect('show_normaloldcourse')
 
