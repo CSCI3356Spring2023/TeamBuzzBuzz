@@ -63,15 +63,6 @@ class DiscussionCreateView(SuccessMessageMixin, LoginRequiredMixin, UserPassesTe
         form.instance.author = self.request.user
         return super().form_valid(form)
 
-    def get_form(self, form_class=None):
-        form = super().get_form(form_class)
-        discussion_id = self.kwargs['pk']
-        discussion = get_object_or_404(Discussion, id=discussion_id)
-        course = discussion.course
-        form.fields['ta'] = forms.ModelChoiceField(
-            queryset=course.current_tas.all(), required=False)
-        return form
-
     def test_func(self, *args, **kwargs):
         course = Course.objects.get(id=self.kwargs['pk'])
         return self.request.user.is_superuser or self.request.user == course.author
