@@ -1,0 +1,1 @@
+web: cd ./tasystem && python manage.py migrate && gunicorn tasystem.wsgi
