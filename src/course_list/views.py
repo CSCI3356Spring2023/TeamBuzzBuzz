@@ -87,8 +87,7 @@ class ProfessorCoursesView(LoginRequiredMixin, ListView):
 
     def change_course_status(request, **kwargs):
         key = kwargs.get('pk')
-        user = CustomUser.objects.get(pk=key)
-        course = Course.objects.filter(author=user)
+        course = Course.objects.get(id=key)
 
         # close the course and change status to false
         course.status = not course.status
@@ -101,7 +100,7 @@ class ProfessorCoursesView(LoginRequiredMixin, ListView):
 
         course.save()
 
-        return redirect('professor_courses', pk=key)
+        return redirect('professor_courses', pk=request.user.id)
 
     # def get_queryset(self, *args, **kwargs):
     #     first, last = self.kwargs['name'].split("_")
