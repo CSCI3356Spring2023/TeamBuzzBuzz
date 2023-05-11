@@ -23,7 +23,7 @@ class CourseDetailView(LoginRequiredMixin, DetailView):
 
 class SuggestedCoursesView(LoginRequiredMixin, ListView):
     model = Course
-    template_name = 'course_list/course_list.html'
+    template_name = 'suggested_old_course/suggested_old_course.html'
     ordering = ['course_title']
     context_object_name = 'course_data'
 
@@ -33,7 +33,17 @@ class SuggestedCoursesView(LoginRequiredMixin, ListView):
         try:
             user = CustomUser.objects.get(pk=key)
             print("User:", user)
-            courses = OldCourse.objects.filter(taker=user)
+            oldcourses = OldCourse.objects.filter(taker=user)#.values('course_title', 'author')
+            profs = []
+            titles = []
+            for x in oldcourses:
+                if x.author not in profs:
+                    profs.append(x.author)
+                if x.course_title not in titles:
+                    titles.append(x.course_title)
+            print(profs)
+            print(titles)
+            courses = Course.objects.filter(author__in=profs, course_title__in=titles)
             print("Courses:", courses)
             return courses
         except ObjectDoesNotExist as e:
