@@ -11,6 +11,7 @@ from users.views import profile as profile_view
 # use this if you want different landing pages per user type
 # from landing_page.views import student_view, professor_view, admin_view
 from landing_page.views import landing_view
+from system_active.views import system_closed_view
 from add_course.views import CourseCreateView, CourseUpdateView
 from add_oldcourse.views import OldCourseCreateView
 from show_oldcourse.views import ProfessorOldCoursesView, NormalCourseListView
@@ -23,11 +24,12 @@ from offers.views import OfferListStudentView, OfferListView, OfferListProfessor
 # Can't render add_course if the view is from pages for some reason
 urlpatterns = [
     path('', landing_view, name='home'),
+    path('landing/system_closed/', system_closed_view, name='system_closed_view'),
+
     path('signup/', register_view, name='signup'),
     path('login/', auth_views.LoginView.as_view(template_name="users/login.html"), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name="users/logout.html"), name='logout'),
     path('profile/', profile_view, name='profile'),
-
 
     path('add_course/', CourseCreateView.as_view(), name='add_course'),
     path('edit_course/<int:pk>/', CourseUpdateView.as_view(), name='edit_course'),

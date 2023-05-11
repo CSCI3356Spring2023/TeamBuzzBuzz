@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'add_oldcourse.apps.AddOldcourseConfig',
     'show_oldcourse.apps.ShowOldcourseConfig',
     'student_oldcourse.apps.StudentOldcourseConfig',
+    'system_active.apps.SystemActiveConfig',
 
     # third party apps
     'crispy_forms',
@@ -68,6 +69,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'tasystem.middleware.SystemClosedMiddleware',
 ]
 
 ROOT_URLCONF = 'tasystem.urls'
